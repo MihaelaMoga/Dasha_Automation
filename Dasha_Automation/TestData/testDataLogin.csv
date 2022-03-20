@@ -1,0 +1,8 @@
+﻿expectedEmail,expectedParola,expectedInvalidLoginErr,loginValid
+124@gmail.com,papadie123,,true
+124@gmail.com,,Adresa de email sau parola sunt incorecte,false
+,papadie123,Adresa de email sau parola sunt incorecte,false
+,,Adresa de email sau parola sunt incorecte,false
+124@gmail.com,p5tfr#$,Adresa de email sau parola sunt incorecte,false
+999@gmail.com,papadie123,Adresa de email sau parola sunt incorecte,false
+999@gmail.com,p5tfr#$,Adresa de email sau parola sunt incorecte,false

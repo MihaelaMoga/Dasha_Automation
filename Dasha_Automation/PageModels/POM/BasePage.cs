@@ -10,19 +10,15 @@ namespace Dasha_Automation.PageModels.POM
         public IWebDriver driver;
 
      //selectorul pt Accept Cookies este acelasi pentru mai multe pagini (de ex ContNouPage, IntraInContPage, ModificaParolaPage)
-        public const string cookieSelector = "body > div.optanon-alert-box-wrapper > div.optanon-alert-box-bg > div.optanon-alert-box-button-container > div.optanon-alert-box-button.optanon-button-allow > div > a"; //css
-        public const string cookieSelectorFinal = "optanon-alert-box-close";
+        public const string theCookieSelector = "body > div.optanon-alert-box-wrapper > div.optanon-alert-box-bottom-top > div > a"; //css
+        
 
 
-
- //metoda e necesara pt SCROLL DOWN + a da click pe ACCEPT COOKIES pe mai multe pagini (de ex pe paginile: ContNouPage, IntraInContPage, ModificaParolaPage)
-        public void ClickOnAcceptCookies()
+        //metoda pt accept cookies
+        public void CloseTheCookies()
         {
-            Utilities.Utils.ScrollDownAndAcceptCookiesFinal(driver, cookieSelector);
+            Utilities.Utils.CloseTheCookiesBanner(driver, 4, theCookieSelector);
         }
-
-
-     
 
 
         //creez constructorul cu parametru driver

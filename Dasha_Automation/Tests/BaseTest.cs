@@ -1,6 +1,7 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using Dasha_Automation;
+using Dasha_Automation.PageModels.POM;
 using Dasha_Automation.Utilities;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -95,32 +96,36 @@ namespace Dasha_Automation.Tests
 
 
 
-        /*
-        //metoda pt logarea in cont cu date valide
-                public void IntraInCont(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
 
-                {
-                    //dau click pe iconita "Contul meu"/"INTRA IN CONT"
-                    IntraInContPage intraInCont = new IntraInContPage(driver);
-                    intraInCont.ClickOnContulMeu();
-                    intraInCont.ClickOnIntraInCont();
-
-                    //introduc email si parola pt a ma loga
-                    intraInCont.Login(expectedEmail, expectedParolaLogare, expectedInvalidLoginErr);
-                    intraInCont.ClickOnContulMeu();
-                }
-
-        */
+  //metoda pt logarea in cont cu date valide
+        public void IntraInCont(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
 
 
+        {
+            MainPage mainPage = new MainPage(_driver);
+            mainPage.CloseTheCookies();
 
-      
+            //dau click pe iconita "Contul meu"/"INTRA IN CONT"
+            IntraInContPage intraInCont = new IntraInContPage(_driver);
+            intraInCont.ClickOnContulMeu();
+            intraInCont.ClickOnIntraInCont();
+
+            //introduc email si parola pt a ma loga
+            intraInCont.Login(expectedEmail, expectedParolaLogare, expectedInvalidLoginErr);
+            intraInCont.ClickOnContulMeu();
+        }
 
 
 
-        
-                //dupa fiecare test
-                [TearDown]
+
+
+
+
+
+
+
+        //dupa fiecare test
+        [TearDown]
                public void Teardown()
                 {
                     //currentStatus poate fi: PASS/FAIL/Incloclusive/Skipped

@@ -63,55 +63,15 @@ namespace Dasha_Automation.Utilities
 
 
 
-        //metoda statica pt a da CLICK la popup-ul ACCEPT COOKIES
-        public static void ScrollDownAndAcceptCookiesFinal(IWebDriver driver, string locator)
+      
+
+        //metoda pt inchidere banner cookies
+        public static void CloseTheCookiesBanner(IWebDriver driver, int sec, string locator)
         {
-
-            //trebuie sa fac scroll down ca sa ajung la butonul de ACCEPT COOKIES
-            IJavaScriptExecutor jse = (IJavaScriptExecutor)driver;
-            jse.ExecuteScript("scroll(0, 250)");
-
-
-            //ACTIONS
-            var clickOnCookies = driver.FindElement(By.CssSelector(locator));
-            Actions action = new Actions(driver);
-            action.Click(clickOnCookies);
-
-            // WaitForExplicitElement(driver, 6, By.ClassName(locator)).Click();
-            //locator e in BasePage (clasa parinte pt restul paginilor)
+            var closeBanner = Utilities.Utils.WaitForExplicitElement(driver, sec, By.CssSelector(locator));
+            closeBanner.SendKeys(Keys.Enter);
+        
         }
-
-
-        public static void ScrollDownAndAcceptCookies(IWebDriver driver, string locator)
-        {
-
-            //trebuie sa fac scroll down ca sa ajung la butonul de ACCEPT COOKIES
-            //   IJavaScriptExecutor jse = (IJavaScriptExecutor)driver;
-            //    jse.ExecuteScript("scroll(0, 250)");
-
-
-            //ACTIONS
-            var clickOnCookies = driver.FindElement(By.CssSelector(locator));
-            Actions action = new Actions(driver);
-            action.Click(clickOnCookies);
-
-        }
-
-
-
-        //metoda statica pt a da click la popup-ul ACCEPT COOKIES
-        public static void AcceptCookies(IWebDriver driver, string locator)
-        {
-
-            //ACTIONS
-            Actions action = new Actions(driver);
-            var clickOnCookies = Utilities.Utils.WaitForExplicitElement(driver, 1, By.CssSelector(locator));
-            action.Click(clickOnCookies);
-
-        }
-
-
-
 
 
 
@@ -515,6 +475,108 @@ namespace Dasha_Automation.Utilities
             //metoda curenta returneaza o lista de dictionare
             return dictionaryList;
         }
+
+
+
+
+
+
+//metoda pt randomizare parola la creare cont nou
+
+        public static string GenerateRandomPassStringCount(int count)
+        {
+            const string chars = "abcdefghijklmnoprstuvxyz1234567890";
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                Random r = new Random();
+                //adaugam chars de la 0 la nr maxim de caractere
+                sb.Append(chars[r.Next(chars.Length)]);
+            }
+            return sb.ToString();
+        }
+
+
+
+//metoda pt randomizare Nume si Prenume valid: minim 3 litere oriunde in Prenume 
+        
+ //count e nr de caractere pt Nume si Prenume - de ex vrem un Nume din 3 litere
+        public static string GenerateRandomNumePrenumeStringCount(int count)
+        {
+            //in char stocam toate caracterele 
+            const string chars = "abcdefghijklmnoprstuwvxyz";
+           
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                Random r = new Random();
+                //random adaugam chars (chars.Length este nr maxim de caractere
+                sb.Append(chars[r.Next(chars.Length)]);
+            }
+            return sb.ToString();
+        }
+
+
+
+
+//metoda pt randomizare Parola valida: inainte de @: minim 3 caractere (litere/numere/ca si caractere speciale doar .-_) 
+
+        //count e nr de caractere pt parola
+        public static string GenerateRandomParolaAndEmailStringCount(int count)
+        {
+            //in char stocam toate caracterele 
+            const string chars = "abcdefghijklmnoprstuwvxyz1234567890._-";
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                Random r = new Random();
+                //random adaugam chars (chars.Length este nr maxim de caractere
+                sb.Append(chars[r.Next(chars.Length)]);
+            }
+            return sb.ToString();
+        }
+
+
+
+//metoda pt randomizare Parola valida: imediat dupa @ minim 2 caractere (litere/numere/caractere speciale) + caractere speciale doar -
+
+        //count e nr de caractere pt parola
+        public static string GenerateRandomEmailPart22StringCount(int count)
+        {
+            //in char stocam toate caracterele 
+            const string chars = "abcdefghijklmnoprstuwvxyz1234567890-";
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                Random r = new Random();
+                //random adaugam chars (chars.Length este nr maxim de caractere
+                sb.Append(chars[r.Next(chars.Length)]);
+            }
+            return sb.ToString();
+        }
+
+
+
+//metoda pt randomizare Parola valida: imediat dupa puntc: minim 2 caractere (litere/numere) 
+
+        //count e nr de caractere pt parola
+        public static string GenerateRandomEmailPart32StringCount(int count)
+        {
+            //in char stocam toate caracterele 
+            const string chars = "abcdefghijklmnoprstuwvxyz1234567890";
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                Random r = new Random();
+                //random adaugam chars (chars.Length este nr maxim de caractere
+                sb.Append(chars[r.Next(chars.Length)]);
+            }
+            return sb.ToString();
+        }
+
 
     }
 

@@ -1,0 +1,14 @@
+﻿expectedEmail,expectedParolaLogare,expectedInvalidLoginErr,expectedVecheaParola2,expectedNouaParola,expectedRetypePass,validChangeOfPass,expectedModificaParolaSuccessMessage,expectedVecheaParolaErr,expectedNouaParolaErr,expectedComparaParoleErr,expectedRetypePassErr
+testarescoalainfo@gmail.com,papadie456,,papadie456,par,par,true,Parola a fost modificată,,,,
+testarescoalainfo@gmail.com,par,,par,123,123,true,Parola a fost modificată,,,,
+testarescoalainfo@gmail.com,123,,123,!%#,!%#,true,Parola a fost modificată,,,,
+testarescoalainfo@gmail.com,!%#,,!%#,Pa1%,Pa1%,true,Parola a fost modificată,,,,
+testarescoalainfo@gmail.com,Pa1%,,Pa1%,papadie456,papadie456,true,Parola a fost modificată,,,,
+testarescoalainfo@gmail.com,papadie456,,,,,false,,Acest câmp este obligatoriu.,Acest câmp este obligatoriu.,,Acest câmp este obligatoriu.
+testarescoalainfo@gmail.com,papadie456,,,parola2,parola2,false,,Acest câmp este obligatoriu.,,, 
+testarescoalainfo@gmail.com,papadie456,,pa,parola2,parola2,false,,,,Parola veche este incorectă,
+testarescoalainfo@gmail.com,papadie456,,papadie456,,parola2,false,,,Acest câmp este obligatoriu.,,Te rugăm să reintroduci valoarea.
+testarescoalainfo@gmail.com,papadie456,,papadie456,parola2,,false,,,,,Acest câmp este obligatoriu.
+testarescoalainfo@gmail.com,papadie456,,papadie456,parola1,parola2,false,,,,,Te rugăm să reintroduci valoarea.
+testarescoalainfo@gmail.com,papadie456,,papadie456,pa,pa,false,,,Noua parola trebuie sa aiba minim 3 caractere (litere/numere/caractere speciale),,Noua parola trebuie sa aiba minim 3 caractere (litere/numere/caractere speciale)
+testarescoalainfo@gmail.com,pa,,pa,papadie456,papadie456,true,Parola a fost modificată,,,,
