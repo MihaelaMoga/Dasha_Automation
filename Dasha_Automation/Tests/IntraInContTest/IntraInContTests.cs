@@ -14,8 +14,8 @@ namespace Dasha_Automation.Tests.IntraInContTest
         //merg pe pagina principala a site-ului 
         string url = Utilities.FrameworkConstants.GetUrl();
 
-
-        [Test]
+        [Category("IntraInCont")]
+        [Test, Order(6)]
         public void GoToIntraInContPage()
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -29,8 +29,13 @@ namespace Dasha_Automation.Tests.IntraInContTest
 
             //vreau sa ajung pe pagina de login => pt asta creez un obiect de tip LoginPage
             IntraInContPage intraInCont = new IntraInContPage(_driver);
-            //merg pe pagina unde ma pot loga
+
+            //dau click pe iconita "Contul meu"
             intraInCont.ClickOnContulMeu();
+
+            //verific care e background color al optiunii INTRA IN CONT
+        //    Assert.AreEqual("rgba(239, 7, 100, 1)", intraInCont.GetButtonColor());
+
             intraInCont.ClickOnIntraInCont();
 
         //verific ca pe pagina de Login apare textul "SAU INTRA IN CONT FOLOSIND"
@@ -79,29 +84,32 @@ namespace Dasha_Automation.Tests.IntraInContTest
 
 
 
-/*
+        /*
 
-        //TC: Verify user can login using only VALID data
-//input VALID
-        [TestCase("124@gmail.com", "papadie123", "",true)]
+                //TC: Verify user can login using only VALID data
+        //input VALID
+                [TestCase("124@gmail.com", "papadie123", "",true)]
 
-//INPUT INVALID
-        [TestCase("124@gmail.com", "", "Adresa de email sau parola sunt incorecte",false)]
-        [TestCase("", "papadie123", "Adresa de email sau parola sunt incorecte",false)]
-        [TestCase("", "", "Adresa de email sau parola sunt incorecte",false)]
+        //INPUT INVALID
+                [TestCase("124@gmail.com", "", "Adresa de email sau parola sunt incorecte",false)]
+                [TestCase("", "papadie123", "Adresa de email sau parola sunt incorecte",false)]
+                [TestCase("", "", "Adresa de email sau parola sunt incorecte",false)]
 
-    //user sau parola pt care nu exista cont   
-        //email corect + parola gresita
-        [TestCase("124@gmail.com", "p5tfr#$", "Adresa de email sau parola sunt incorecte", false)]
-        //email gresit + parola corecta
-        [TestCase("999@gmail.com", "papadie123", "Adresa de email sau parola sunt incorecte", false)]
-        //email gresit + parola gresita
-        [TestCase("999@gmail.com", "p5tfr#$", "Adresa de email sau parola sunt incorecte", false)]
-*/
+            //user sau parola pt care nu exista cont   
+                //email corect + parola gresita
+                [TestCase("124@gmail.com", "p5tfr#$", "Adresa de email sau parola sunt incorecte", false)]
+                //email gresit + parola corecta
+                [TestCase("999@gmail.com", "papadie123", "Adresa de email sau parola sunt incorecte", false)]
+                //email gresit + parola gresita
+                [TestCase("999@gmail.com", "p5tfr#$", "Adresa de email sau parola sunt incorecte", false)]
+        */
 
 
+
+        [Category("IntraInCont")]
+        [Category("Smoke")]
        // [Test]
-        [Test, TestCaseSource("GetCredentialsDataCsv")]
+        [Test, TestCaseSource("GetCredentialsDataCsv"), Order(7)]
         public void Login(string expectedEmail, string expectedParola, string expectedInvalidLoginErr, bool loginValid)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report

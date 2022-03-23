@@ -32,7 +32,7 @@ namespace Dasha_Automation.Utilities
                         {
                             options.AddArgument("--start-maximized");
                         }
-
+                        
 
                         // optiunea headlesss: in testare nu se foloseste partea grafica a browserului => testerul NU VEDE browserul deschis
                         //=> testele ruleaza mai repede (economie de timp prin inchiderea si deschiderea browserului)
@@ -74,6 +74,7 @@ namespace Dasha_Automation.Utilities
 
                 case WebBrowsers.Firefox:
                     {
+                       
                         var firefoxOptions = new FirefoxOptions();
 
                         List<string> optionList = new List<string>();
@@ -82,6 +83,8 @@ namespace Dasha_Automation.Utilities
                         {
                             optionList.Add("--headless");
                         }
+                       
+                        
                         if (FrameworkConstants.ignoreCertificate)
                         {
                             optionList.Add("--ignore-certificate-errors");
@@ -106,6 +109,8 @@ namespace Dasha_Automation.Utilities
                         //optiunile sunt adaugate la browser
                         return new FirefoxDriver(firefoxOptions);
                     }
+
+
                 case WebBrowsers.Edge:
                     {
                         //pas 1: cream obiectul de optiuni pt browserul Edge
@@ -141,7 +146,7 @@ namespace Dasha_Automation.Utilities
 
 
   //method overloading dar FARA PARAMETRU (pt ca testele sa ruleze cu driverul din configuratie)
-  //altfel spus: daca imi ceri un browser (fara sa zici exact care browser), metoda ca lua driverul din config.properties
+  //altfel spus: daca imi ceri un browser (fara sa zici exact care browser), metoda va lua driverul din config.properties
   //=> daca nu precizez ce driver, testele se vor efectua pe browserul din config
 
 

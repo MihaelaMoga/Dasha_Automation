@@ -9,6 +9,7 @@ using System.Threading;
 
 namespace Dasha_Automation.Tests.FilterTest
 {
+  
     class FilterTests : BaseTest
     {
         //URL-ul paginii principale a site-ului  
@@ -16,14 +17,14 @@ namespace Dasha_Automation.Tests.FilterTest
 
 
 
+//Nota: metoda de CITIRE a datelor de teste este GetCredentialsDataCsv3 si se afla in clasa parinte BaseTest.cs
 
-        //Nota: metoda de CITIRE a datelor de teste este GetCredentialsDataCsv3 si se afla in clasa parinte BaseTest.cs
-
-
+        
         //metoda pt a ajunge pe pagina de INCALTAMINTE
         //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
         // [Test]
-        [Test,TestCaseSource("GetCredentialsDataCsv3")]
+        [Category("Filter")]
+        [Test,TestCaseSource("GetCredentialsDataCsv3"), Order(8)]
         public void ClickOnIncaltaminte(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
 
@@ -48,10 +49,11 @@ namespace Dasha_Automation.Tests.FilterTest
 
 
 
-    //metoda pt a ajunge pe pagina de IMBRACAMINTE
+        //metoda pt a ajunge pe pagina de IMBRACAMINTE
         //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        // [Test]
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        //   [Test]
+        [Category("Filter")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(9)]
         public void ClickOnImbracaminte(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -75,10 +77,11 @@ namespace Dasha_Automation.Tests.FilterTest
 
 
 
-//metoda pt a ajunge pe pagina de GENTI
+        //metoda pt a ajunge pe pagina de GENTI
         //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
         //  [Test]
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        [Category("Filter")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(10)]
         public void ClickOnGenti(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -111,9 +114,10 @@ namespace Dasha_Automation.Tests.FilterTest
 
 
 
-//metoda pt a ajunge in submeniul COSMETICE
-
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        //metoda pt a ajunge in submeniul COSMETICE
+        // [Test]
+        [Category("Filter")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(11)]
         public void ClickOnCosmetice(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -138,10 +142,11 @@ namespace Dasha_Automation.Tests.FilterTest
 
 
 
- //metoda pt a ajunge in pagina de COSMETICE/INGRIJIREA TENULUI
+        //metoda pt a ajunge in pagina de COSMETICE/INGRIJIREA TENULUI
         //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        // [Test]
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        //  [Test]
+        [Category("Filter")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(12)]
         public void ClickOnIngrijireaTenului(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
 
@@ -167,10 +172,11 @@ namespace Dasha_Automation.Tests.FilterTest
 
 
 
-//metoda pt a ajunge in pagina de COSMETICE/INGRIJIREA PARULUI
+        //metoda pt a ajunge in pagina de COSMETICE/INGRIJIREA PARULUI
         //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        // [Test]
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        //  [Test]
+        [Category("Filter")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(13)]
         public void ClickOnIngrijireaParului(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
 
@@ -192,10 +198,11 @@ namespace Dasha_Automation.Tests.FilterTest
 
 
 
-//metoda pt a ajunge in pagina de NOUTATI
+        //metoda pt a ajunge in pagina de NOUTATI
         //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        //  [Test]
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        // [Test]
+        [Category("Filter")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(14)]
         public void ClickOnNoutati(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -221,10 +228,11 @@ namespace Dasha_Automation.Tests.FilterTest
 
 
 
- //metoda pt a ajunge in pagina de OUTLET
+        //metoda pt a ajunge in pagina de OUTLET
         //  [TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        //  [Test]
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        // [Test]
+        [Category("Filter")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(15)]
         public void ClickOnOutlet(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report

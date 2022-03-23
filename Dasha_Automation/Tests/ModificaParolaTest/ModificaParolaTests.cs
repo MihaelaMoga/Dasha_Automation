@@ -22,7 +22,8 @@ namespace Dasha_Automation.Tests.ModificaParolaTests
 
         //   [TestCase("testarescoalainfo@gmail.com","papadie456","")]
         //   [Test]
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        [Category("ModificaParola")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(18)]
         public void GoToModificaParolaPage(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -82,58 +83,59 @@ namespace Dasha_Automation.Tests.ModificaParolaTests
 
 
 
-/*
-
-      
-
-                // cazuri valide: userul completeaza toate campurile corect:
-                //Parola valida = minim 3 caractere (litere/numere/caractere speciale)
-                //parola din 3 litere
-                [TestCase("testarescoalainfo@gmail.com", "papadie456","","papadie456", "par", "par",true,"Parola a fost modificată","","","","")]
-                //parola din 3 numere
-                    [TestCase("testarescoalainfo@gmail.com", "par", "", "par","123", "123",true,"Parola a fost modificată","","","","")]
-                //parola din 3 caractere speciale
-                   [TestCase("testarescoalainfo@gmail.com", "123","","123", "!%#", "!%#",true,"Parola a fost modificată","","","","")]
-                //parola din 4 caractere
-                   [TestCase("testarescoalainfo@gmail.com", "!%#","", "!%#","Pa1%", "Pa1%",true,"Parola a fost modificată","","","","")]
-                   [TestCase("testarescoalainfo@gmail.com", "Pa1%", "", "Pa1%", "papadie456", "papadie456",true,"Parola a fost modificată","","","","")]
+        /*
 
 
 
+                        // cazuri valide: userul completeaza toate campurile corect:
+                        //Parola valida = minim 3 caractere (litere/numere/caractere speciale)
+                        //parola din 3 litere
+                        [TestCase("testarescoalainfo@gmail.com", "papadie456","","papadie456", "par", "par",true,"Parola a fost modificată","","","","")]
+                        //parola din 3 numere
+                            [TestCase("testarescoalainfo@gmail.com", "par", "", "par","123", "123",true,"Parola a fost modificată","","","","")]
+                        //parola din 3 caractere speciale
+                           [TestCase("testarescoalainfo@gmail.com", "123","","123", "!%#", "!%#",true,"Parola a fost modificată","","","","")]
+                        //parola din 4 caractere
+                           [TestCase("testarescoalainfo@gmail.com", "!%#","", "!%#","Pa1%", "Pa1%",true,"Parola a fost modificată","","","","")]
+                           [TestCase("testarescoalainfo@gmail.com", "Pa1%", "", "Pa1%", "papadie456", "papadie456",true,"Parola a fost modificată","","","","")]
 
 
-        //cazuri invalide:
-        //nu completez nici un camp
-              [TestCase("testarescoalainfo@gmail.com", "papadie456","", "", "", "", false,"", "Acest câmp este obligatoriu.", "Acest câmp este obligatoriu.", "", "Acest câmp este obligatoriu.")]
 
 
-        //cazuri invalide pt parola veche
-            //nu completez vechea parola
-                [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "", "parola2", "parola2", false, "", "Acest câmp este obligatoriu.", "", "", "")]
-             //parola veche invalida, parola noua valida
-                [TestCase("testarescoalainfo@gmail.com", "papadie456", "","pa", "parola2", "parola2",false,"","","", "Parola veche este incorectă","")]
+
+                //cazuri invalide:
+                //nu completez nici un camp
+                      [TestCase("testarescoalainfo@gmail.com", "papadie456","", "", "", "", false,"", "Acest câmp este obligatoriu.", "Acest câmp este obligatoriu.", "", "Acest câmp este obligatoriu.")]
 
 
-        //cazuri invalide pt noua parola:
-             //nu completez noua parola - UNEORI IMI DA FAILED PT CA am folosit sleep in loc de wait !!!!!
-                [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "papadie456", "", "parola2", false, "", "", "Acest câmp este obligatoriu.", "", "Te rugăm să reintroduci valoarea.")]
+                //cazuri invalide pt parola veche
+                    //nu completez vechea parola
+                        [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "", "parola2", "parola2", false, "", "Acest câmp este obligatoriu.", "", "", "")]
+                     //parola veche invalida, parola noua valida
+                        [TestCase("testarescoalainfo@gmail.com", "papadie456", "","pa", "parola2", "parola2",false,"","","", "Parola veche este incorectă","")]
 
 
-        //cazuri invalide pt retype password:
-            //nu completez retypePassword
-                [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "papadie456", "parola2", "", false, "", "", "", "", "Acest câmp este obligatoriu.")]
-            //parola veche si noua valide, retypePass diferit de noua parola
-                [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "papadie456", "parola1", "parola2",false,"","","","", "Te rugăm să reintroduci valoarea.")]
+                //cazuri invalide pt noua parola:
+                     //nu completez noua parola - UNEORI IMI DA FAILED PT CA am folosit sleep in loc de wait !!!!!
+                        [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "papadie456", "", "parola2", false, "", "", "Acest câmp este obligatoriu.", "", "Te rugăm să reintroduci valoarea.")]
 
 
-        //parola veche valida, parola noua = retypePass dar invalide
-                [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "papadie456", "pa", "pa",false,"","","Noua parola trebuie sa aiba minim 3 caractere (litere/numere/caractere speciale)","","Noua parola trebuie sa aiba minim 3 caractere (litere/numere/caractere speciale)")]
-                [TestCase("testarescoalainfo@gmail.com", "pa", "", "pa", "papadie456", "papadie456", true, "Parola a fost modificată", "","","","")]
+                //cazuri invalide pt retype password:
+                    //nu completez retypePassword
+                        [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "papadie456", "parola2", "", false, "", "", "", "", "Acest câmp este obligatoriu.")]
+                    //parola veche si noua valide, retypePass diferit de noua parola
+                        [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "papadie456", "parola1", "parola2",false,"","","","", "Te rugăm să reintroduci valoarea.")]
 
-   */   
 
-    //    [Test]
-    [Test, TestCaseSource("GetCredentialsDataCsv")]
+                //parola veche valida, parola noua = retypePass dar invalide
+                        [TestCase("testarescoalainfo@gmail.com", "papadie456", "", "papadie456", "pa", "pa",false,"","","Noua parola trebuie sa aiba minim 3 caractere (litere/numere/caractere speciale)","","Noua parola trebuie sa aiba minim 3 caractere (litere/numere/caractere speciale)")]
+                        [TestCase("testarescoalainfo@gmail.com", "pa", "", "pa", "papadie456", "papadie456", true, "Parola a fost modificată", "","","","")]
+
+           */
+
+        //    [Test]
+        [Category("ModificaParola")]
+        [Test, TestCaseSource("GetCredentialsDataCsv"), Order(19)]
         public void ModificaParola(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr, string expectedVecheaParola2, string expectedNouaParola, string expectedRetypePass, bool validChangeOfPass, string expectedModificaParolaSuccessMessage, string expectedVecheaParolaErr, string expectedNouaParolaErr, string expectedComparaParoleErr, string expectedRetypePassErr)
         {
 

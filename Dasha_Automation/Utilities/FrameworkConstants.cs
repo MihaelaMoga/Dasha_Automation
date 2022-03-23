@@ -32,15 +32,21 @@ namespace Dasha_Automation.Utilities
 
         public static string configBrowser = configData["browser"];
 
-   //pt decriptarea datelor cu care ma conectez la baza de date
-        //Read the connection string (server=;user=;password=;port=;database=) from json and save them to conString variable
-        //salvez datele de conectare la server in variabila conDetails
-       
+
+
+
+        //metoda statica pt a returna url-ul 
+        public static string GetUrl()
+        {
+            //return String.Format("{0}://{1}:{2}{3}",protocol,hostname,port,path);
+            return String.Format("{0}://{1}", protocol, hostname);
+        }
 
 
 
 
-
+        //metoda statica pt a retura numele unei extensii
+        //voi apela metoda cand vreau sa rulez testele cu browser cu extensie instalata
         public static string GetExtensionName(WebBrowsers browserType)
         {
             switch(browserType)
@@ -58,16 +64,9 @@ namespace Dasha_Automation.Utilities
         }
 
 
-    //metoda statica pe care o vom apela ulterior in clasa AuthTest
-        public static string GetUrl()
-        {
-            //return String.Format("{0}://{1}:{2}{3}",protocol,hostname,port,path);
-            return String.Format("{0}://{1}",protocol,hostname);
-        }
 
 
-
-
+    
 
 
         //metoda pt rularea testelor cu optiunea driver headless in functie de variabilele de mediu 

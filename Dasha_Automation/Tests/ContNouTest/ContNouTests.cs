@@ -17,8 +17,8 @@ namespace Dasha_Automation.Tests.ContNouTest
 
 
 
-
-        [Test]
+        [Category("ContNou")]
+        [Test, Order(3)]
         public void CheckLabelsContNou()
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -39,6 +39,8 @@ namespace Dasha_Automation.Tests.ContNouTest
    
         //pt a testa pagina CONT NOU creez un obiect de tip ContNouPage 
             ContNouPage contNou = new ContNouPage(_driver);
+
+
         //parametrii de mai jos ii iau din specificatii
             Assert.IsTrue(contNou.ContNouLabels("Nume", "Prenume", "Email", "Parola"));
         }
@@ -49,26 +51,27 @@ namespace Dasha_Automation.Tests.ContNouTest
 
 
 
-        
-/*
 
-//TC: Verify user can register a Dasha account using VALID data
-                //Nume valid: minim 3 litere oriunde in Nume 
-                [TestCase("Ion", "Faur", "craciun20@yahoo.com", "parola", true, true, "", "", "")]
+        /*
 
-                //Prenume valid: minim 3 litere oriunde in Prenume 
-                [TestCase("Ion", "Ana", "ana7@yahoo.com", "parola", true, true, "", "", "")]
+        //TC: Verify user can register a Dasha account using VALID data
+                        //Nume valid: minim 3 litere oriunde in Nume 
+                        [TestCase("Ion", "Faur", "craciun20@yahoo.com", "parola", true, true, "", "", "")]
 
-                //structura email valid: {1}@{2}.{2} +  inainte de @ sunt acceptate doar anumite caractere (.-_)
-                //Parola valida: minim 3 caractere (litere/numere/caractere speciale)
+                        //Prenume valid: minim 3 litere oriunde in Prenume 
+                        [TestCase("Ion", "Ana", "ana7@yahoo.com", "parola", true, true, "", "", "")]
 
-
-                //newsletter NU e mandatory
-                [TestCase("Ioana", "Dragomir", "cirja@yahoo.com", "balauri", false, true, "", "", "")]
- */
+                        //structura email valid: {1}@{2}.{2} +  inainte de @ sunt acceptate doar anumite caractere (.-_)
+                        //Parola valida: minim 3 caractere (litere/numere/caractere speciale)
 
 
-        [Test]
+                        //newsletter NU e mandatory
+                        [TestCase("Ioana", "Dragomir", "cirja@yahoo.com", "balauri", false, true, "", "", "")]
+         */
+
+        [Category("ContNou")]
+        [Category("Smoke")]
+        [Test(Description ="Create a new Dasha account using the Random generic class"), Order(4)]
         public void ContNouValid()
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -90,27 +93,35 @@ namespace Dasha_Automation.Tests.ContNouTest
     //caz 1: newsletter = true
             var nume = Utilities.Utils.GenerateRandomNumePrenumeStringCount(3);
             var prenume = Utilities.Utils.GenerateRandomNumePrenumeStringCount(3);
-            var emailPart1 = Utilities.Utils.GenerateRandomParolaAndEmailStringCount(1);
-            var emailPart2 = Utilities.Utils.GenerateRandomEmailPart22StringCount(2);
-            var emailPart3 = Utilities.Utils.GenerateRandomEmailPart32StringCount(2);
+                var emailPart1 = Utilities.Utils.GenerateRandomParolaAndEmailStringCount(1);
+                var emailPart2 = Utilities.Utils.GenerateRandomEmailPart22StringCount(2);
+                var emailPart3 = Utilities.Utils.GenerateRandomEmailPart32StringCount(2);
+            var email = emailPart1 + "@" + emailPart2 + "." + emailPart3;
             var parola = Utilities.Utils.GenerateRandomParolaAndEmailStringCount(3);
-            contNou.ContNou(nume, prenume, emailPart1+"@"+ emailPart2 + "."+ emailPart3, parola, true, true);
+            contNou.ContNou(nume, prenume, email, parola, true, true);
             Assert.AreEqual("Istoric comenzi", contNou.TextAfterContNouValid());
 
 
-        //la CREAREA UNUI CONT CU SUCCES: vreau sa afisez credentialele folosite
-           StringBuilder sb = new StringBuilder();
-           var numeContCreat = sb.Append(nume).ToString();
-           var prenumeContCreat = sb.Append(prenume).ToString();
-           var emailContCreat = sb.Append(emailPart1 + "@"+ emailPart2 +"."+ emailPart3).ToString();
-           var parolaContCreat = sb.Append(parola).ToString();
-           Console.WriteLine("Nume: {0}, Prenume: {1}, Email: {2}, Parola: {3}", numeContCreat, prenumeContCreat, emailContCreat, parolaContCreat);
+
+
+            //la CREAREA UNUI CONT CU SUCCES: vreau sa afisez credentialele generate prin folosirea clasei Random
+            /*
+                 StringBuilder sb = new StringBuilder();
+                var numeContCreat = sb.Append(nume).ToString();
+                var prenumeContCreat = sb.Append(prenume).ToString();
+                var emailContCreat = sb.Append(emailPart1 + "@"+ emailPart2 +"."+ emailPart3).ToString();
+                var parolaContCreat = sb.Append(parola).ToString();
+                Console.WriteLine("Nume: {0}, Prenume: {1}, Email: {2}, Parola: {3}", numeContCreat, prenumeContCreat, emailContCreat, parolaContCreat);
+            */
+            Console.WriteLine("nume: {0}, prenume: {1}, email: {2}, parola: {3}", nume, prenume, email, parola);
+          
 
         }
  
 
 
        
+
 
          //TC: Verify user cannot register a new Dasha account using INVALID data
                 //Nume invalid: Nume din 2 litere
@@ -185,10 +196,10 @@ namespace Dasha_Automation.Tests.ContNouTest
         //userul completeaza un email deja folosit la crearea unui cont => apare mesaj de eroare: Exista deja un cont cu aceasta adresa de email    
                 [TestCase("Ioana", "Dragomir", "cirja@yahoo.com", "balauri", false, true, "", "", "Exista deja un cont cu aceasta adresa de email")]
 
-       
 
 
-        [Test]
+        [Category("ContNou")]
+        [Test, Order(5)]
         public void ContNouInvalid(string expectedNume, string expectedPrenume, string expectedEmail, string expectedParola, bool newsletter, bool terms, string expected4FieldsErrMessage, string expectedTermsAlertErr, string expectedSameEmailErrMessage)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report

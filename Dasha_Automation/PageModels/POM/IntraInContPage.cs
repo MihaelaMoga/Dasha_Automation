@@ -56,6 +56,17 @@ namespace Dasha_Automation.PageModels.POM
 
 
 
+/*
+        //metoda care retunreaza culoarea optiunii INTRA IN CONT
+        public string GetButtonColor()
+        {
+            //click dreapta pe optiunea "INTRA IN CONT" din site + Inspect + Copy/Copy CssSelector
+            var intraInContElement = driver.FindElement(By.ClassName(intraInContSelector));
+            Console.WriteLine("Culoarea meniului INTRA IN CONT este {0}",intraInContElement.GetCssValue("color"));
+            return intraInContElement.GetCssValue("background-color");
+        }
+*/
+
 
         //metoda pentru a da click pe optiunea INTRA IN CONT
         public void ClickOnIntraInCont()
@@ -67,7 +78,9 @@ namespace Dasha_Automation.PageModels.POM
         }
 
 
-    
+       
+
+
         public string ActualIntraInContText()
         {
             //dupa ce am intrat pe pagina INTRA IN CONT, selectez cuvintele "SAU INTRA IN CONT FOLOSIND:" din pagina de INTRA IN CONT + Inspect + Copy/Copy CssSelector

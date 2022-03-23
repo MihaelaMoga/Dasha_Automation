@@ -37,13 +37,15 @@ namespace Dasha_Automation.Tests
             //din actualPath iau calea proiectului
             //uri = uniform resource identifier
             var projectPath = new Uri(actualPath).LocalPath;
+
             //creez un director (folder cu denumirea Reports) in projectPath (unde e bin-ul proiectului) 
             //pe linia de cod de mai jos, cu beculetul galben dau click pe "using System.IO"
             Directory.CreateDirectory(projectPath.ToString() + "Reports");
             //data generarii raportului
             DateTime time = DateTime.Now;
-            //in folderul Reports: salvez test reportul sub denumirea report_h_mm_ss.html
+            //in folderul Reports: salvez 1 test report (sub denumirea report_h_mm_ss.html) pt fiecare clasa din Test 
             var reportPath = projectPath + "Reports\\report_" + time.ToString("h_mm_ss") + ".html";
+            
             //in reportPath (adica in fisierul report_h_mm_ss.html) adaugam continutul test reportului 
             //pt linia de cod de mai jos, click pe beculet galben si selectez "using AventStack.ExtentReports.Reporter"
             var htmlReporter = new ExtentV3HtmlReporter(reportPath);
@@ -58,7 +60,7 @@ namespace Dasha_Automation.Tests
             //in loc de "Test ENV" pot trece numele environmentului pe care rulez testele 
             _extent.AddSystemInfo("Environment", "Test ENV");
             //in Test Report vrem sa apare numele celui care a rulat testele
-            _extent.AddSystemInfo("Username", "Alex G");
+            _extent.AddSystemInfo("Username", "Mihaela Moga");
             //pe disk in projectPath, in test report adaugam fisierul report-config.xml"
             htmlReporter.LoadConfig(projectPath + "report-config.xml");
         }
@@ -70,10 +72,12 @@ namespace Dasha_Automation.Tests
         [SetUp]
         public void Setup()
         {
-            //din clasa Browser apelez metoda GetDriver si apoi selectez case WebBrowser.Chrome 
+            //din clasa Browser apelez metoda GetDriver
             //metoda GetDriver nu are parametru => se va utiliza browserul din fisierul de tip text cu numele config.properties
-            driver.Value = Browser.GetDriver();
 
+            driver.Value = Browser.GetDriver();
+           
+           
             //valoarea de mai sus a browserului o vars in _driver
             _driver = driver.Value;
         }

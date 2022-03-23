@@ -14,11 +14,13 @@ namespace Dasha_Automation.Tests.LogoutTest
         string url = Utilities.FrameworkConstants.GetUrl();
 
 
+        [Category("Logout")]
+        [Category("Smoke")]
         //Nota: metoda de CITIRE a datelor de teste este GetCredentialsDataCsv3 si se afla in clasa parinte BaseTest.cs
          // [TestCase("testarescoalainfo@gmail.com", "papadie456","")]
        //  [Test]
 
-        [Test, TestCaseSource("GetCredentialsDataCsv3")]
+        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(20)]
         public void Logout(string expectedEmail, string expectedParola,string expectedInvalidLoginErr)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report

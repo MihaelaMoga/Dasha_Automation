@@ -22,12 +22,18 @@ namespace Dasha_Automation.PageModels.POM
 
 
 
-        //constructorul mosteneste constructorul din BasePage => avem nevoie de constructor pt a crea ulterior un obiect de MainPage
+        //constructorul mosteneste constructorul din BasePage => avem nevoie de constructor pt a crea ulterior obiecte de tip MainPage in clasa MainPageTest.cs
         public MainPage(IWebDriver driver) : base(driver)
         {
         }
 
 
+
+    //metoda prin care sa returnez titlul paginii web
+        public string GetDocumentTitle()
+        {
+          return Utilities.Utils.ExecuteJsScript(driver, "return document.title");
+        }
 
 
    
@@ -55,6 +61,19 @@ namespace Dasha_Automation.PageModels.POM
             var contNouPageTextElement = driver.FindElement(By.CssSelector(contNouPageTextSelector));
             //returnez textul care apare ca titlul in pagina web (si anume in pagina web apare "Client nou")
             return contNouPageTextElement.Text;   //returneaza "Client nou"
+        }
+
+
+
+     //metoda pt afisarea cookie-urilor
+     public string GetACookieValue()
+        {
+            //cookies stocheaza lista cu toate cookie-urile site-ului
+            var cookies = driver.Manage().Cookies;
+          // Utilities.Utils.PrintCookies(cookies);
+            //pt assert voi return valoarea cookie-ului care imi arata ca nu sunt un user logat
+            var ckForAssert = cookies.GetCookieNamed("rgisanonymous");
+            return ckForAssert.Value;
         }
 
 

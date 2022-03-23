@@ -31,7 +31,11 @@ namespace Dasha_Automation.Utilities
 
         }
 
-
+        public static IWebElement WaitForElementClickable(IWebDriver driver, int seconds, By locator)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(seconds));
+            return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
+        }
 
 
         public static IWebElement WaitForFluentElement(IWebDriver driver, int seconds, By locator)
@@ -41,10 +45,9 @@ namespace Dasha_Automation.Utilities
 
             //initializam proprietatile obiectului fluentWait
             {
-
                 //setam timeout-ul de 20 secunde
                 Timeout = TimeSpan.FromSeconds(seconds),
-                //la fiecare 100 milisecunde verifica daca a aparut elementul in pagina; daca nu a aparut: mai verifica peste alte 250 milisecunde
+                //la fiecare 100 milisecunde verifica daca a aparut elementul in pagina; daca nu a aparut: mai verifica peste alte 100 milisecunde
                 PollingInterval = TimeSpan.FromMilliseconds(100),
                 //mesajul customizat va inlocui mesajul standard
                 Message = "Sorry! the element cannot be found in page"
@@ -55,7 +58,9 @@ namespace Dasha_Automation.Utilities
             fluentWait.IgnoreExceptionTypes(typeof(NoSuchElementException));
            
 
+            
             //in paranteze rotunde apare ca se asteapta pana cand gasim elementul cu locator (ID btn2) in pagina
+            //dupa ce gaseste elementul in pagina, returneaza fluentWait
             return fluentWait.Until(x => x.FindElement(locator));
         }
 
@@ -75,19 +80,27 @@ namespace Dasha_Automation.Utilities
 
 
 
-        public static string GetDateFromDateTime(DateTime datevalue)
-     {
-           return datevalue.ToShortDateString();
-       }
+    
 
 
     public static void PrintCookies(ICookieJar cookies)
         {
+            Console.WriteLine("The site contains {0} cookies", cookies.AllCookies.Count);
             //vrem sa afisam fiecare cookie (numele si valoarea fiecarui cookie)
+            //cookies.AllCookies este o lista cu toate cookie-urile site-ului
             foreach (Cookie c in cookies.AllCookies)
             {
                 Console.WriteLine("Cookie name {0} - cookie value {1}", c.Name, c.Value);
             }
+           
+        }
+
+
+
+
+        public static string GetDateFromDateTime(DateTime datevalue)
+        {
+            return datevalue.ToShortDateString();
         }
 
 
@@ -103,8 +116,9 @@ namespace Dasha_Automation.Utilities
 
         public static void TakeScreenshotWithDate(IWebDriver driver, string path, string fileName, ScreenshotImageFormat format)
         {
+            //cream un obiect numit validation de tipul clasei DirectoryInfo (adica de tip folder) cu parametru path
             DirectoryInfo validation = new DirectoryInfo(path);
-            //daca NU exista un folder pt a salva print screenu-urile, definim mai jos sa creeze automat un folder
+            //daca NU exista un folder pe calea path pt a salva print screenu-urile, definim mai jos sa creeze automat un folder
             if (!validation.Exists)
             {
                 validation.Create();
@@ -130,19 +144,21 @@ namespace Dasha_Automation.Utilities
 
 
 
+
+
         //passez driverului un script de Javascript si driverul va executa acel script
-        //pt titlul paginii
-        public static void ExecuteJsScript(IWebDriver driver, string script)
+        public static string ExecuteJsScript(IWebDriver driver, string script)
         {
             
             var jsExecutor = (IJavaScriptExecutor)driver;
-            var result = jsExecutor.ExecuteScript(script);
+            //result returneaza un obiect
+           var result = jsExecutor.ExecuteScript(script);
             if(result != null)
             {
-                Console.WriteLine(result.ToString());
+               Console.WriteLine(result.ToString());
             }
-           
-            
+            var stringForAssert = result.ToString();
+            return stringForAssert;
         }
 
 
@@ -450,7 +466,7 @@ namespace Dasha_Automation.Utilities
 
 
 
-//metoda pt a CONERTi un fisier CSV intr-o lista de dictionare
+//metoda pt a CONVERTI un fisier CSV intr-o lista de dictionare
         //de ce lista de dictionare? pt ca pt fiecare linie din fisierul csv se va crea un dictionar
         public static List<Dictionary<string, string>> ConvertCsvToDictionary(string filePath)
         {
@@ -481,7 +497,7 @@ namespace Dasha_Automation.Utilities
 
 
 
-//metoda pt randomizare parola la creare cont nou
+//metoda GENERALA pt randomizare parola la creare cont nou
 
         public static string GenerateRandomPassStringCount(int count)
         {
@@ -498,7 +514,7 @@ namespace Dasha_Automation.Utilities
 
 
 
-//metoda pt randomizare Nume si Prenume valid: minim 3 litere oriunde in Prenume 
+//metoda pt randomizare Nume si Prenume valid: minim 3 LITERE oriunde in Prenume 
         
  //count e nr de caractere pt Nume si Prenume - de ex vrem un Nume din 3 litere
         public static string GenerateRandomNumePrenumeStringCount(int count)
@@ -519,7 +535,7 @@ namespace Dasha_Automation.Utilities
 
 
 
-//metoda pt randomizare Parola valida: inainte de @: minim 3 caractere (litere/numere/ca si caractere speciale doar .-_) 
+//metoda pt randomizare Parola valida: inainte de @: minim 3 caractere (LITERE/NUMERE/ca si caractere speciale DOAR .-_ ) 
 
         //count e nr de caractere pt parola
         public static string GenerateRandomParolaAndEmailStringCount(int count)
@@ -539,7 +555,7 @@ namespace Dasha_Automation.Utilities
 
 
 
-//metoda pt randomizare Parola valida: imediat dupa @ minim 2 caractere (litere/numere/caractere speciale) + caractere speciale doar -
+//metoda pt randomizare Parola valida: imediat dupa @ minim 2 caractere (LITERE/NUMERE/caractere speciale doar - )
 
         //count e nr de caractere pt parola
         public static string GenerateRandomEmailPart22StringCount(int count)
@@ -559,7 +575,7 @@ namespace Dasha_Automation.Utilities
 
 
 
-//metoda pt randomizare Parola valida: imediat dupa puntc: minim 2 caractere (litere/numere) 
+//metoda pt randomizare Parola valida: imediat dupa puntc: minim 2 caractere (LITERE/NUMERE) 
 
         //count e nr de caractere pt parola
         public static string GenerateRandomEmailPart32StringCount(int count)
