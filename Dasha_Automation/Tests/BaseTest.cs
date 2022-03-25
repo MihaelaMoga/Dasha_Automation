@@ -101,10 +101,10 @@ namespace Dasha_Automation.Tests
 
 
 
-  //metoda pt logarea in cont cu date valide
+
+
+ //metoda pt logarea in cont cu date valide
         public void IntraInCont(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
-
-
         {
             MainPage mainPage = new MainPage(_driver);
             mainPage.CloseTheCookies();
@@ -122,14 +122,106 @@ namespace Dasha_Automation.Tests
 
 
 
+//metoda pt a alege o categorie de produse si apoi pt a intra pe pagina unui produs
+        public void GoToItemPageUserIsLogged(string expectedItemCategory, string expectedCodProdus)
+        {
+
+            //merg pe pagina Cosmetice
+            FilterFunctionality filter = new FilterFunctionality(_driver);
+
+            if (expectedItemCategory == "Cosmetice")
+            {
+                filter.ClickOnCosmetice();
+                //verific ca am ajuns pe pagina COSMETICE
+                Assert.AreEqual(expectedItemCategory, filter.CheckMainMenuCategories());
+            }
+
+            if (expectedItemCategory == "Genti din piele naturala")
+            {
+                filter.ClickOnGenti();
+                Assert.AreEqual(expectedItemCategory, filter.CheckMainMenuCategories());
+            }
+
+            //inainte sa selectez produsul, gasesc si verific codul produsului
+            ItemPage selectedItem = new ItemPage(_driver);
+
+
+            if (expectedCodProdus == "252833")
+            {
+                Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem1());
+                //dau click pe produsul cu codul de mai sus
+                selectedItem.GoToItem1Page();
+            }
+
+            if (expectedCodProdus == "248758")
+            {
+                Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem2());
+                selectedItem.GoToItem2Page();
+            }
+
+            if (expectedCodProdus == "535882")
+            {
+                Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem3());
+                selectedItem.GoToItem3Page();
+            }
+
+        }
+
+
+     
+
+//metoda pt adaugare produse in cos
+
+        public void AddToCartUserIsLogged(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdus, string expectedQuantity, string expectedPrice, string expectedCodProdusAfisat, string expectedCartTotal)
+        {
+
+            IntraInCont(expectedEmail, expectedPass, expectedErrMessage);
+            GoToItemPageUserIsLogged(expectedItemCategory, expectedCodProdus);
+
+
+            //adaug 1 buc in cos
+            AddToCartPage itemToCart = new AddToCartPage(_driver);
+            itemToCart.ClickOnAdauga();
+
+            //verific ca se deschide fereastra CONTINUTUL COSULUI (dupa ce adaug produsul in cos)
+            Assert.AreEqual("«  VEZI SI ALTE PRODUSE", itemToCart.CheckContinutulCosuluiFinal());
+
+
+            //daca datale de test precizeaza adaugare 2 buc in cos din acelasi produs
+            if (expectedQuantity == "2")
+            {
+                //din CONTINUTUL COSULUI ma intorc in pagina produsului    
+                itemToCart.ClickOnVeziSiAlteProduse();
+
+                //verific ca m-am intors pe pagina aceluiasi produs
+                ItemPage selectedItem = new ItemPage(_driver);
+
+                if (expectedCodProdus == "535882")
+                {
+                    Assert.AreEqual(expectedCodProdusAfisat, selectedItem.CheckCodeOfItem());
+                    Console.WriteLine(selectedItem.CheckCodeOfItem());
+                }
+
+                //adaug inca o bucata din acelasi produs
+                AddToCartPage itemToCart2ndPieces = new AddToCartPage(_driver);
+                itemToCart2ndPieces.ClickOnAdauga();
+
+                //verific ca se deschide fereastra CONTINUTUL COSULUI (dupa ce adaug al 2-lea produsul in cos)
+                Assert.AreEqual("«  VEZI SI ALTE PRODUSE", itemToCart.CheckContinutulCosuluiFinal());
+
+                //assert pt numarul de produse din cos
+                Assert.AreEqual(expectedCartTotal, itemToCart2ndPieces.CheckCartTotal());
+            }
+
+        }
 
 
 
 
 
 
-        //dupa fiecare test
-        [TearDown]
+    //dupa fiecare test
+            [TearDown]
                public void Teardown()
                 {
                     //currentStatus poate fi: PASS/FAIL/Incloclusive/Skipped
@@ -200,9 +292,9 @@ namespace Dasha_Automation.Tests
 
 
 
-        //dupa toate testele
+    //dupa toate testele
         [OneTimeTearDown]
-    public void AllTearDown()
+        public void AllTearDown()
         {
             //save the test report on disk
             _extent.Flush();

@@ -1,22 +1,21 @@
-﻿using NUnit.Framework;
-using Dasha_Automation.PageModels.POM;
+﻿using Dasha_Automation.PageModels.POM;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Threading;
+using System.Text;
 
-namespace Dasha_Automation.Tests.AddToCartTest
+namespace Dasha_Automation.Tests.CheckoutTest
 {
-    class AddToCartTests :BaseTest
+    class CheckoutTests : BaseTest
     {
-
-        //URL-ul paginii principale a site-ului  
+        //merg pe pagina principala a site-ului 
         string url = Utilities.FrameworkConstants.GetUrl();
 
 
 
-//metoda pt CITIRE TestData din fisier de tip csv
+
+        //metoda pt CITIRE TestData din fisier de tip csv
         //citesc datele de test din fisierul testDataLogin.csv care e salvat pe calea TestData\\testDataLogin.csv
         private static IEnumerable<TestCaseData> GetCredentialsDataCsv()
         {
@@ -38,8 +37,8 @@ namespace Dasha_Automation.Tests.AddToCartTest
                     if (index > 0)
                     {
                         //valorile astfel separate sunt returnate ca array de valori, valorile fiind despartite prin virgula
-                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), values[4].Trim(), values[5].Trim(),values[6].Trim(),values[7].Trim(),values[8].Trim());
-                       
+                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), values[4].Trim(), values[5].Trim(), values[6].Trim(), values[7].Trim(), values[8].Trim());
+
                     }
                     index++;
                 }
@@ -48,13 +47,19 @@ namespace Dasha_Automation.Tests.AddToCartTest
 
 
 
+
+
+
+
+        //  [TestCase("testarescoalainfo@gmail.com", "papadie456","", "Cosmetice","248758","1","13000 lei", "COD PRODUS: 248758","13000 lei")]
+        //  [Test]
+
         [Category("AddToCart")]
         [Category("Smoke")]
-         [Test, Order(17), TestCaseSource("GetCredentialsDataCsv")]
-        public void AddToCart(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdus, string expectedQuantity, string expectedPrice, string expectedCodProdusAfisat, string expectedCartTotal)
-       // public void AddToCart(string expectedItemCategory, string expectedCodProdus, string expectedQuantity, string expectedPrice, string expectedCodProdusAfisat, string expectedCartTotal)
-        {
+        [Test, Order(18), TestCaseSource("GetCredentialsDataCsv")]
 
+        public void Checkout(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdus, string expectedQuantity, string expectedPrice, string expectedCodProdusAfisat, string expectedCartTotal)
+        {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
             testName = TestContext.CurrentContext.Test.Name;
             _test = _extent.CreateTest(testName);
@@ -64,11 +69,14 @@ namespace Dasha_Automation.Tests.AddToCartTest
 
 
         //metoda apelata din BaseTest (e in BaseTest pt ca e metoda folosita si in AddToCartTests si in CheckoutTests)
-            AddToCartUserIsLogged(expectedEmail, expectedPass, expectedErrMessage, expectedItemCategory, expectedCodProdus, expectedQuantity, expectedPrice, expectedCodProdusAfisat, expectedCartTotal);
-        
+            AddToCartUserIsLogged(expectedEmail, expectedPass, expectedErrMessage, expectedItemCategory, expectedCodProdus, expectedQuantity, expectedPrice, expectedCodProdusAfisat, expectedCartTotal);      
+
+            CheckoutPage checkout = new CheckoutPage(_driver);
+            checkout.ClickOnVeziDetaliiCos();
+            Assert.AreEqual("Produse comandate",checkout.CheckCheckoutDetails());
+
 
         }
-
 
 
     }

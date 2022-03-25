@@ -38,8 +38,9 @@ namespace Dasha_Automation.Tests.FilterTest
  
         //userul completeaza credentialele valide pt a se loga in contul sau
             IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
+            
 
-        //userul da click pe meniul INCALTAMINTE
+            //userul da click pe meniul INCALTAMINTE
             FilterFunctionality filter = new FilterFunctionality(_driver);
             filter.ClickOnIncaltaminte();
 

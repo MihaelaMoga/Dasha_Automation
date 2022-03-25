@@ -10,8 +10,9 @@ namespace Dasha_Automation.PageModels.POM
 
 
      //   const string adaugaButtonSelector = "//*[@id='bodyBody']/div[4]/div/div[4]/div[2]/div[7]/div[2]/button"; //xpath relativ
-        const string adaugaInCosButtonSelector = "//*[@id='bodyBody']/div[4]/div/div[4]/div[2]"; //parte din full xpath    
+        const string adaugaInCosButtonSelector = "//*[@id='bodyBody']/div[4]/div/div[4]/div[2]"; //parte din full xpath                                                                                                                             
         const string veziSiAlteProduseButton = "#dHF > div.header-cart > div > div > a.btn.btn-white";//css
+        const string cartTotal = "price-formatted"; //class
 
 
 
@@ -26,7 +27,7 @@ namespace Dasha_Automation.PageModels.POM
         //metoda prin care adaug produsul in cos
         public void ClickOnAdauga()
         {
-            var adaugaButtonElement = Utilities.Utils.WaitForExplicitElement(driver, 5, By.XPath(adaugaInCosButtonSelector));
+            var adaugaButtonElement = Utilities.Utils.WaitForExplicitElement(driver, 20, By.XPath(adaugaInCosButtonSelector));
             adaugaButtonElement.Click();
         }
 
@@ -42,7 +43,20 @@ namespace Dasha_Automation.PageModels.POM
         }
 
 
+        public void ClickOnVeziSiAlteProduse()
+        {
+            var veziSiAlteProduseButtonEl = Utilities.Utils.WaitForExplicitElement(driver, 5, By.CssSelector(veziSiAlteProduseButton));
+            veziSiAlteProduseButtonEl.Click();
+
+        }
      
+
+        public string CheckCartTotal()
+        {
+            driver.SwitchTo().ActiveElement();
+            var quantity = Utilities.Utils.WaitForExplicitElement(driver,7,By.ClassName(cartTotal));
+            return quantity.Text;
+        }
 
     }
 }

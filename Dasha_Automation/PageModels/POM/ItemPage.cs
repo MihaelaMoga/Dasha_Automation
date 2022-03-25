@@ -22,7 +22,9 @@ namespace Dasha_Automation.PageModels.POM
         const string ratingSelector = "rating-average";//class
       
         const string priceSelector = "product-price";//class
+       
         const string discountPriceSelector = "product-price-pink"; //class
+       
 
         const string telefonSelector = "google_forwarding_number"; //class
         const string producatorSelector = "#tabs > div:nth-child(2) > p > a";//css
@@ -67,7 +69,7 @@ namespace Dasha_Automation.PageModels.POM
         public void GoToItem1Page()
         {
             var sampon = Utilities.Utils.WaitForElementClickable(driver, 7, By.XPath(codeOfSelectedItem1));
-            Console.WriteLine(sampon.Text);
+           // Console.WriteLine(sampon.Text);
             sampon.Click();
         }
 
@@ -76,7 +78,7 @@ namespace Dasha_Automation.PageModels.POM
          public void GoToItem2Page()
             {
                var produs2 = Utilities.Utils.WaitForElementClickable(driver,7,(By.XPath(codeOfSelectedItem2)));
-               Console.WriteLine(produs2.Text);
+            //   Console.WriteLine(produs2.Text);
                produs2.Click();
              }
 
@@ -86,7 +88,7 @@ namespace Dasha_Automation.PageModels.POM
         {
             var produs3 = driver.FindElement(By.XPath(codeOfSelectedItem3));
             var denumireProdus3 = driver.FindElement(By.XPath(nameOfSelectedItem3));
-           Console.WriteLine(denumireProdus3.Text);
+         //  Console.WriteLine(denumireProdus3.Text);
             produs3.Click();
         }
 
@@ -118,7 +120,7 @@ namespace Dasha_Automation.PageModels.POM
 //metoda pt a returna pretul produsului dupa discount
     public string CheckDiscountPrice()
         {
-            var discountPrice  = Utilities.Utils.WaitForExplicitElement(driver, 1, By.ClassName(discountPriceSelector));
+            var discountPrice  = Utilities.Utils.WaitForExplicitElement(driver, 4, By.ClassName(discountPriceSelector));
             return discountPrice.Text;
         }
 

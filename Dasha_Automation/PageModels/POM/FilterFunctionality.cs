@@ -75,7 +75,7 @@ namespace Dasha_Automation.PageModels.POM
 //metoda pt a ajunge in pagina de COSMETICE
         public void ClickOnCosmetice()
         {
-            var cosmeticeElement = driver.FindElement(By.CssSelector(cosmeticeMainMenu));
+            var cosmeticeElement = Utilities.Utils.WaitForElementClickable(driver,3,By.CssSelector(cosmeticeMainMenu));
             cosmeticeElement.Click();
         }
 
