@@ -68,17 +68,6 @@ namespace Dasha_Automation.Utilities
 
 
 
-      
-
-        //metoda pt inchidere banner cookies
-        public static void CloseTheCookiesBanner(IWebDriver driver, int sec, string locator)
-        {
-            var closeBanner = Utilities.Utils.WaitForExplicitElement(driver, sec, By.CssSelector(locator));
-            closeBanner.SendKeys(Keys.Enter);
-        
-        }
-
-
 
     
 

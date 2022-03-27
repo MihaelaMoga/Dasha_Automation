@@ -32,10 +32,6 @@ namespace Dasha_Automation.Tests.IntraInContTest
 
             //dau click pe iconita "Contul meu"
             intraInCont.ClickOnContulMeu();
-
-            //verific care e background color al optiunii INTRA IN CONT
-        //    Assert.AreEqual("rgba(239, 7, 100, 1)", intraInCont.GetButtonColor());
-
             intraInCont.ClickOnIntraInCont();
 
         //verific ca pe pagina de Login apare textul "SAU INTRA IN CONT FOLOSIND"
@@ -118,18 +114,11 @@ namespace Dasha_Automation.Tests.IntraInContTest
 
             //cu comanda de mai jos ajung pe pagina principala
             _driver.Navigate().GoToUrl(url);
-            MainPage mainPage = new MainPage(_driver);
-            mainPage.CloseTheCookies();
 
-            //ca sa ajung in pagina INTRA IN CONT: creez un obiect de tip IntraInContPage
+
+            IntraInCont2(expectedEmail, expectedParola, expectedInvalidLoginErr);
+            
             IntraInContPage intraInCont = new IntraInContPage(_driver);
-            intraInCont.ClickOnContulMeu();
-            intraInCont.ClickOnIntraInCont();
-
-
-            //ma loghez cu valorile din TestCase (vezi mai sus)
-            intraInCont.Login(expectedEmail, expectedParola, expectedInvalidLoginErr);
-
             if (loginValid == true)
             {
                 //daca Login e valid, trebuie sa ajunga pe pagina urmatoare unde apare "Istoric comenzi"

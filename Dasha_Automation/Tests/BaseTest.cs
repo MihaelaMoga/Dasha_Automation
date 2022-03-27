@@ -101,11 +101,9 @@ namespace Dasha_Automation.Tests
 
 
 
-
-
- //metoda pt logarea in cont cu date valide
-        public void IntraInCont(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
-        {
+        //metoda pt logarea in cont cu date valide
+            public void IntraInCont2(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
+            {
             MainPage mainPage = new MainPage(_driver);
             mainPage.CloseTheCookies();
 
@@ -116,8 +114,19 @@ namespace Dasha_Automation.Tests
 
             //introduc email si parola pt a ma loga
             intraInCont.Login(expectedEmail, expectedParolaLogare, expectedInvalidLoginErr);
+
+            }
+
+
+
+       //metoda pt logarea in cont cu date valide urmat de click pe Iconita Contul meu
+            public void IntraInCont(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
+            {
+            IntraInCont2(expectedEmail, expectedParolaLogare, expectedInvalidLoginErr);
+
+            IntraInContPage intraInCont = new IntraInContPage(_driver);
             intraInCont.ClickOnContulMeu();
-        }
+            }
 
 
 
@@ -145,11 +154,7 @@ namespace Dasha_Automation.Tests
             //inainte sa selectez produsul, gasesc si verific codul produsului
             ItemPage selectedItem = new ItemPage(_driver);
 
-
-
  //DE GASIT O SOLUTIE SA FAC O METODA GENERALA IN LOC DE CELE 2 IF-uri de mai jos            
-          
-            
                        if (expectedCodProdus == "248758")
                        {
                            Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem2());
@@ -161,12 +166,11 @@ namespace Dasha_Automation.Tests
                            Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem3());
                            selectedItem.GoToItem3Page();
                        }
-               
-
         }
 
 
      
+        
         public void AddTheItemInContinutulCosului(string expectedItemCodeOnContinutulCosului)
         {
             //adaug 1 buc in cos
@@ -184,7 +188,7 @@ namespace Dasha_Automation.Tests
 
 
 
-//metoda pt adaugare produse in cos
+//metoda pt adaugare produse in cos (1 buc produs X, 2 buc produs X, 1 buc produs X si 1 buc produs Y) 
 
         public void AddToCartUserIsLogged(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdusOnFilter, string expectedQuantity, string expectedUnitPrice, string expectedItemCodeOnItemPage, string expectedCartTotal, string expectedItemCodeOnContinutulCosului, string expectedItem2Category, string expectedCodProdus2OnFilter, string expectedQuantityItem2)
         {
@@ -251,12 +255,8 @@ namespace Dasha_Automation.Tests
                 }
 
             }
-               
-
-              
-
-                
-            }
+                        
+        }
 
         
 

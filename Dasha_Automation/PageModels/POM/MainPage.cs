@@ -8,8 +8,9 @@ namespace Dasha_Automation.PageModels.POM
     class MainPage : BasePage
     {
 
-    //definim selectori specifici paginii MainPage
-        
+        //definim selectori specifici paginii MainPage
+
+        public const string theCookieSelector = "body > div.optanon-alert-box-wrapper > div.optanon-alert-box-bottom-top > div > a"; //css
 
         //css selectori ca sa ajung la "CONT NOU"                                                                                                                                                                                                            //selector pt iconita "Contul meu"
         const string contulMeuIconSelector = "dasha-user-outline"; //class
@@ -19,8 +20,7 @@ namespace Dasha_Automation.PageModels.POM
 
         //css ca sa verific ca sunt pe pagina in care apare sintagma "Client nou"
         const string contNouPageTextSelector = "#bodyBody > div.container.customerfrontend-accountnew > div > div.row > div.col-xs-12.account-new-left > h3 > span"; //CSS
-
-
+        
 
         //constructorul mosteneste constructorul din BasePage => avem nevoie de constructor pt a crea ulterior obiecte de tip MainPage in clasa MainPageTest.cs
         public MainPage(IWebDriver driver) : base(driver)
@@ -65,8 +65,17 @@ namespace Dasha_Automation.PageModels.POM
 
 
 
-     //metoda pt afisarea cookie-urilor
-     public string GetACookieValue()
+  //metoda pt accept cookies
+        public void CloseTheCookies()
+        {
+
+            var closeBanner = Utilities.Utils.WaitForExplicitElement(driver, 4, By.CssSelector(theCookieSelector));
+            closeBanner.SendKeys(Keys.Enter);
+        }
+
+
+        //metoda pt afisarea cookie-urilor
+        public string GetACookieValue()
         {
             //cookies stocheaza lista cu toate cookie-urile site-ului
             var cookies = driver.Manage().Cookies;

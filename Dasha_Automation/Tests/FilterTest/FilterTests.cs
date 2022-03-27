@@ -100,8 +100,6 @@ namespace Dasha_Automation.Tests.FilterTest
             FilterFunctionality filter = new FilterFunctionality(_driver);
             filter.ClickOnGenti();
             
-
-
             Assert.AreEqual("Genti din piele naturala", filter.CheckMainMenuCategories());
         }
 
@@ -135,7 +133,7 @@ namespace Dasha_Automation.Tests.FilterTest
             //userul da click pe meniul COSMETICE
             FilterFunctionality filter = new FilterFunctionality(_driver);
             filter.ClickOnCosmetice();
-
+            Assert.AreEqual("Cosmetice", filter.CheckMainMenuCategories());
         }
 
 
@@ -165,7 +163,6 @@ namespace Dasha_Automation.Tests.FilterTest
             FilterFunctionality filter = new FilterFunctionality(_driver);
   
             filter.ClickOnIngrijireaTenului();
-
 
               Assert.AreEqual("Ingrijirea tenului", filter.CheckSubmenuCategories());
         }
@@ -250,13 +247,8 @@ namespace Dasha_Automation.Tests.FilterTest
             FilterFunctionality filter = new FilterFunctionality(_driver);
             filter.ClickOnOutlet();
 
-
             Assert.AreEqual("OUTLET", filter.CheckOutletPage());
         }
-
-
-
-
 
     }
 }
