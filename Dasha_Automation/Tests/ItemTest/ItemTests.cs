@@ -55,14 +55,14 @@ namespace Dasha_Automation.Tests.ItemTest
         [Category("Item")]
         [Category("Smoke")]
         [Test, Order(16), TestCaseSource("GetCredentialsDataCsv")]
-        public void ItemPage(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdus, string expectedRating, string expectedPrice, bool discountPrice, string expectedProducator,string expectedCodProdusAfisat)
+        public void ItemPage(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdusOnFilter, string expectedRating, string expectedUnitPrice, bool discountPrice, string expectedProducator,string expectedItemCodeOnItemPage)
         {
 
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
             testName = TestContext.CurrentContext.Test.Name;
             _test = _extent.CreateTest(testName);
 
-            //userul deschide pagina princilala a site-uluiexpectedCodProdusAfisat
+            //userul deschide pagina princilala a site-ului
             _driver.Navigate().GoToUrl(url);
 
 
@@ -70,7 +70,7 @@ namespace Dasha_Automation.Tests.ItemTest
          //userul merge pe pagina principala si apoi se logheaza 
             IntraInCont(expectedEmail, expectedPass, expectedErrMessage);
          //userul alege categoria de produse si merge pe pagina unui produs
-            GoToItemPageUserIsLogged(expectedItemCategory, expectedCodProdus);
+            GoToItemPageUserIsLogged(expectedItemCategory, expectedCodProdusOnFilter);
 
             
             ItemPage selectedItem = new ItemPage(_driver);
@@ -84,19 +84,19 @@ namespace Dasha_Automation.Tests.ItemTest
 
             //verific ca am ajuns pe pagina produsului
            
-                Assert.AreEqual(expectedCodProdusAfisat, selectedItem.CheckCodeOfItem());
+                Assert.AreEqual(expectedItemCodeOnItemPage, selectedItem.CheckCodeOfItem());
                 Console.WriteLine(selectedItem.CheckCodeOfItem());
             
 
         //verific pret produs
         if(discountPrice == true)
             {
-                Assert.AreEqual(expectedPrice, selectedItem.CheckDiscountPrice());
+                Assert.AreEqual(expectedUnitPrice, selectedItem.CheckDiscountPrice());
             }
             else
             {
                 //pret fara discount
-                Assert.AreEqual(expectedPrice, selectedItem.CheckPrice());
+                Assert.AreEqual(expectedUnitPrice, selectedItem.CheckPrice());
             }
              
 

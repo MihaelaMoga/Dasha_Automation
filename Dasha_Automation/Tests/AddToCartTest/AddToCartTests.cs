@@ -38,7 +38,7 @@ namespace Dasha_Automation.Tests.AddToCartTest
                     if (index > 0)
                     {
                         //valorile astfel separate sunt returnate ca array de valori, valorile fiind despartite prin virgula
-                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), values[4].Trim(), values[5].Trim(),values[6].Trim(),values[7].Trim(),values[8].Trim());
+                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), values[4].Trim(), values[5].Trim(),values[6].Trim(),values[7].Trim(),values[8].Trim(), values[9].Trim(), values[10].Trim(), values[11].Trim(), values[12].Trim());
                        
                     }
                     index++;
@@ -51,20 +51,20 @@ namespace Dasha_Automation.Tests.AddToCartTest
         [Category("AddToCart")]
         [Category("Smoke")]
          [Test, Order(17), TestCaseSource("GetCredentialsDataCsv")]
-        public void AddToCart(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdus, string expectedQuantity, string expectedPrice, string expectedCodProdusAfisat, string expectedCartTotal)
-       // public void AddToCart(string expectedItemCategory, string expectedCodProdus, string expectedQuantity, string expectedPrice, string expectedCodProdusAfisat, string expectedCartTotal)
+        public void AddToCart(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdusOnFilter, string expectedQuantity, string expectedUnitPrice, string expectedItemCodeOnItemPage, string expectedCartTotal, string expectedItemCodeOnContinutulCosului, string expectedItem2Category, string expectedCodProdus2OnFilter, string expectedQuantityItem2)
         {
 
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
             testName = TestContext.CurrentContext.Test.Name;
             _test = _extent.CreateTest(testName);
 
-            //userul deschide pagina princilala a site-uluiexpectedCodProdusAfisat
+
+            //userul deschide pagina principala a site-ului 
             _driver.Navigate().GoToUrl(url);
 
 
         //metoda apelata din BaseTest (e in BaseTest pt ca e metoda folosita si in AddToCartTests si in CheckoutTests)
-            AddToCartUserIsLogged(expectedEmail, expectedPass, expectedErrMessage, expectedItemCategory, expectedCodProdus, expectedQuantity, expectedPrice, expectedCodProdusAfisat, expectedCartTotal);
+            AddToCartUserIsLogged(expectedEmail, expectedPass, expectedErrMessage, expectedItemCategory, expectedCodProdusOnFilter, expectedQuantity, expectedUnitPrice, expectedItemCodeOnItemPage, expectedCartTotal, expectedItemCodeOnContinutulCosului, expectedItem2Category,expectedCodProdus2OnFilter, expectedQuantityItem2);
         
 
         }

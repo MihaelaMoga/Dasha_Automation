@@ -9,11 +9,12 @@ namespace Dasha_Automation.PageModels.POM
     {
 
 
-     //   const string adaugaButtonSelector = "//*[@id='bodyBody']/div[4]/div/div[4]/div[2]/div[7]/div[2]/button"; //xpath relativ
-        const string adaugaInCosButtonSelector = "//*[@id='bodyBody']/div[4]/div/div[4]/div[2]"; //parte din full xpath                                                                                                                             
-        const string veziSiAlteProduseButton = "#dHF > div.header-cart > div > div > a.btn.btn-white";//css
+        const string adaugaInCosButtonSelector = "//*[@id='bodyBody']/div[4]/div/div[4]/div[2]"; //parte din full xpath
+                                                                                                 
+        const string expectedItemCodeOnContinutulCosului = "#dHF > div.header-cart > div > span > div > div.products > div > p";//css
         const string cartTotal = "price-formatted"; //class
-
+        
+        const string veziSiAlteProduseButton = "#dHF > div.header-cart > div > div > a.btn.btn-white";//css
 
 
         //constructorul mosteneste constructorul din clasa parinte -> avem nevoie de driver pt a identifica elementele din pagina
@@ -24,7 +25,7 @@ namespace Dasha_Automation.PageModels.POM
 
 
 
-        //metoda prin care adaug produsul in cos
+    //metoda prin care adaug produsul in cos
         public void ClickOnAdauga()
         {
             var adaugaButtonElement = Utilities.Utils.WaitForExplicitElement(driver, 20, By.XPath(adaugaInCosButtonSelector));
@@ -32,9 +33,34 @@ namespace Dasha_Automation.PageModels.POM
         }
 
 
- 
 
 
+
+
+
+
+    //metoda care verifica ca in cos a fost adaugat produsul cu codul corect
+        public string CheckCodeItemOnContinutulCosului()
+        {
+            var itemCodeInContinutulCosului = Utilities.Utils.WaitForExplicitElement(driver,10,By.CssSelector(expectedItemCodeOnContinutulCosului));
+            return itemCodeInContinutulCosului.Text;
+        }
+
+
+
+    //metoda care returneaza valoarea finala a comenzii
+        public string CheckCartTotalOnContinutulCosului()
+        {
+            driver.SwitchTo().ActiveElement();
+            var cartTotalElement = Utilities.Utils.WaitForExplicitElement(driver, 7, By.ClassName(cartTotal));
+            return cartTotalElement.Text;
+        }
+
+
+
+
+
+    //metoda care returneaza textul de pe butonul "VEZI SI ALTE PRODUSE"
         public string CheckContinutulCosuluiFinal()
         {
             driver.SwitchTo().ActiveElement();
@@ -43,6 +69,7 @@ namespace Dasha_Automation.PageModels.POM
         }
 
 
+    //metoda care da click pe butonul "VEZI SI ALTE PRODUSE"
         public void ClickOnVeziSiAlteProduse()
         {
             var veziSiAlteProduseButtonEl = Utilities.Utils.WaitForExplicitElement(driver, 5, By.CssSelector(veziSiAlteProduseButton));
@@ -51,12 +78,7 @@ namespace Dasha_Automation.PageModels.POM
         }
      
 
-        public string CheckCartTotal()
-        {
-            driver.SwitchTo().ActiveElement();
-            var quantity = Utilities.Utils.WaitForExplicitElement(driver,7,By.ClassName(cartTotal));
-            return quantity.Text;
-        }
+    
 
     }
 }

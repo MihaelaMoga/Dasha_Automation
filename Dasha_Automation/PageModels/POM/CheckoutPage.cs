@@ -9,7 +9,16 @@ namespace Dasha_Automation.PageModels.POM
     {
 
         const string veziDetaliiCosSelector = "btn-pink"; //class
+
         const string produseComandateSelector = "#cartDetails > thead > tr.hidden-xs > th.col-xs-6.col-sm-5";//css
+        const string codeItemOnCheckoutPage = "//tr/td[2]/p[2]"; //fragment de xpath
+       // const string codeItem2OnCheckoutPage = "//*[tr[2]/td[2]/p[2]]"; //fragment de xpath
+        const string codeItem2OnCheckoutPage = "//*[@id='item-Product_535882']/td[2]/p[2]"; //fragment de xpath
+
+        const string pasulUrmatorCheckoutSelector = "next-step-checkout"; //id
+        const string adresaLivrareLabel = "predefined-shipping-addresses-head"; //class
+       
+
 
         //constructorul mosteneste constructorul din clasa BasePage (clasa parinte)
         public CheckoutPage(IWebDriver driver) : base(driver)
@@ -26,11 +35,44 @@ namespace Dasha_Automation.PageModels.POM
 
 
     //metoda prin care verific ca am ajuns in Checkout Page (unde scrie "Produse comandate")
-        public string CheckCheckoutDetails()
+        public string SeeCheckoutDetails()
         {
             var produseComandateElement = driver.FindElement(By.CssSelector(produseComandateSelector));
             return produseComandateElement.Text;
         }
+
+
+
+    //metoda care va returna codul produsului aflat in cos
+    public string CheckItemCode()
+        {
+            var itemCodeOnCheckoutPage = driver.FindElement(By.XPath(codeItemOnCheckoutPage));
+            return itemCodeOnCheckoutPage.Text;
+        }
+
+    public string CheckItem2Code()
+        {
+            var item2CodeCheckoutPage = driver.FindElement(By.XPath(codeItem2OnCheckoutPage));
+            return item2CodeCheckoutPage.Text;
+        }
+
+
+    //metoda pt a da click pe butonul PASUL URMATOR din pagian de checkout 
+        public void ClickOnPasulUrmatorCheckout()
+        {
+            var pasulUrmatorCheckout = Utilities.Utils.WaitForElementClickable(driver,7,By.Id(pasulUrmatorCheckoutSelector));
+            pasulUrmatorCheckout.Click();
+        }
+
+
+
+    //metoda pt a returna textul "Date livrare" din pagina de Checkout
+       public string CheckDateLivrareLabel()
+         {
+            var dateLivrareLabelElement = Utilities.Utils.WaitForExplicitElement(driver,7,By.ClassName(adresaLivrareLabel));
+            return dateLivrareLabelElement.Text;
+         }
+
 
 
     }

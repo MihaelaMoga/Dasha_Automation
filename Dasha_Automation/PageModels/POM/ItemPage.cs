@@ -44,7 +44,7 @@ namespace Dasha_Automation.PageModels.POM
 //metoda care va returna codul produsului
     public string GetCodeOfItem1()
         {
-                var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 7, By.XPath(codeOfSelectedItem1));
+                var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 12, By.XPath(codeOfSelectedItem1));
                 return codProdusElement.GetAttribute("data-product-id");   
         }
 
@@ -53,14 +53,14 @@ namespace Dasha_Automation.PageModels.POM
         //metoda care va returna codul produsului
         public string GetCodeOfItem2()
         {
-            var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 7, By.XPath(codeOfSelectedItem2));
+            var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 12, By.XPath(codeOfSelectedItem2));
             return codProdusElement.GetAttribute("data-product-id");
         }
 
 
         public string GetCodeOfItem3()
         {
-            var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 7, By.XPath(codeOfSelectedItem3));
+            var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 12, By.XPath(codeOfSelectedItem3));
             return codProdusElement.GetAttribute("data-product-id");
         }
 
@@ -68,8 +68,7 @@ namespace Dasha_Automation.PageModels.POM
         //metoda pt a intra pe pagina produsului: https://www.dasha.ro/Samponanti-pigmentgalben-OysterBlondyeAnti-YellowShampoo250ml.html
         public void GoToItem1Page()
         {
-            var sampon = Utilities.Utils.WaitForElementClickable(driver, 7, By.XPath(codeOfSelectedItem1));
-           // Console.WriteLine(sampon.Text);
+            var sampon = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(codeOfSelectedItem1));
             sampon.Click();
         }
 
@@ -77,8 +76,7 @@ namespace Dasha_Automation.PageModels.POM
            
          public void GoToItem2Page()
             {
-               var produs2 = Utilities.Utils.WaitForElementClickable(driver,7,(By.XPath(codeOfSelectedItem2)));
-            //   Console.WriteLine(produs2.Text);
+               var produs2 = Utilities.Utils.WaitForElementClickable(driver,12,(By.XPath(codeOfSelectedItem2)));
                produs2.Click();
              }
 
@@ -86,9 +84,7 @@ namespace Dasha_Automation.PageModels.POM
         //metoda pt produsele cu discount
         public void GoToItem3Page()
         {
-            var produs3 = driver.FindElement(By.XPath(codeOfSelectedItem3));
-            var denumireProdus3 = driver.FindElement(By.XPath(nameOfSelectedItem3));
-         //  Console.WriteLine(denumireProdus3.Text);
+            var produs3 = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(codeOfSelectedItem3));
             produs3.Click();
         }
 

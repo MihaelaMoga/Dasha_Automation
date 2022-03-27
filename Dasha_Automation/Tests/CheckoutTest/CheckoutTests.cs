@@ -37,7 +37,7 @@ namespace Dasha_Automation.Tests.CheckoutTest
                     if (index > 0)
                     {
                         //valorile astfel separate sunt returnate ca array de valori, valorile fiind despartite prin virgula
-                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), values[4].Trim(), values[5].Trim(), values[6].Trim(), values[7].Trim(), values[8].Trim());
+                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), values[4].Trim(), values[5].Trim(), values[6].Trim(), values[7].Trim(), values[8].Trim(), values[9].Trim(), values[10].Trim(), values[11].Trim(), values[12].Trim());
 
                     }
                     index++;
@@ -56,9 +56,9 @@ namespace Dasha_Automation.Tests.CheckoutTest
 
         [Category("AddToCart")]
         [Category("Smoke")]
-        [Test, Order(18), TestCaseSource("GetCredentialsDataCsv")]
+        [Test, Order(19), TestCaseSource("GetCredentialsDataCsv")]
 
-        public void Checkout(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdus, string expectedQuantity, string expectedPrice, string expectedCodProdusAfisat, string expectedCartTotal)
+        public void Checkout(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdusOnFilter, string expectedQuantity, string expectedUnitPrice, string expectedItemCodeOnItemPage, string expectedCartTotal, string expectedItemCodeOnContinutulCosului, string expectedItem2Category, string expectedCodProdus2OnFilter, string expectedQuantityItem2)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
             testName = TestContext.CurrentContext.Test.Name;
@@ -69,11 +69,42 @@ namespace Dasha_Automation.Tests.CheckoutTest
 
 
         //metoda apelata din BaseTest (e in BaseTest pt ca e metoda folosita si in AddToCartTests si in CheckoutTests)
-            AddToCartUserIsLogged(expectedEmail, expectedPass, expectedErrMessage, expectedItemCategory, expectedCodProdus, expectedQuantity, expectedPrice, expectedCodProdusAfisat, expectedCartTotal);      
+            AddToCartUserIsLogged(expectedEmail, expectedPass, expectedErrMessage, expectedItemCategory, expectedCodProdusOnFilter, expectedQuantity, expectedUnitPrice, expectedItemCodeOnItemPage, expectedCartTotal, expectedItemCodeOnContinutulCosului, expectedItem2Category, expectedCodProdus2OnFilter, expectedQuantityItem2);      
 
             CheckoutPage checkout = new CheckoutPage(_driver);
+
+        //merg spre pagina de Checkout
             checkout.ClickOnVeziDetaliiCos();
-            Assert.AreEqual("Produse comandate",checkout.CheckCheckoutDetails());
+        //verific ca am ajuns pe pagina de checkout
+            Assert.AreEqual("Produse comandate",checkout.SeeCheckoutDetails());
+
+
+     //verifica ca produsul/produsele din CONTINUTUL COSULUI ajunge/ajung in pagina de checkout (verificare in functie de codul produsului) => creez o lista de produse
+
+            List<string> myCheckoutlist = new List<string>();
+            myCheckoutlist.Add(checkout.CheckItemCode());
+            //verific ca produsul e in cos
+            Assert.IsTrue(myCheckoutlist.Contains(checkout.CheckItemCode()));
+
+
+            if (expectedQuantityItem2 != "")
+            {
+                myCheckoutlist.Add(checkout.CheckItem2Code());
+                //daca exista un al 2-lea produs in cos (diferit de primul), verific ca al 2-lea produs e in cos
+                Assert.IsTrue(myCheckoutlist.Contains(checkout.CheckItem2Code()));
+            }
+           
+            //afisez la consola ce produs/produse sunt in pagina de checkout
+            foreach(string s in myCheckoutlist)
+            {
+                Console.WriteLine("In cos exista produsul {0}", s);
+            }
+
+            checkout.ClickOnPasulUrmatorCheckout();
+            Assert.AreEqual("Date livrare",checkout.CheckDateLivrareLabel());
+           
+
+//DE CONTINUAT ASSERTURILE
 
 
         }
