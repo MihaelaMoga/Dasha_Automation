@@ -1,5 +1,5 @@
 ﻿expectedEmail,expectedPass,expectedErrMessage,expectedItemCategory,expectedCodProdusOnFilter,expectedQuantity,expectedUnitPrice,expectedItemCodeOnItemPage,expectedCartTotal,expectedItemCodeOnContinutulCosului,expectedItemCategory,expectedCodProdus2OnFilter,expectedQuantityItem2
 testarescoalainfo@gmail.com,papadie456,,Cosmetice,248758,1,13000 lei,COD PRODUS: 248758,13000 lei,Cod: 248758,,,
-testarescoalainfo@gmail.com,papadie456,,Genti din piele naturala,535882,1,26900 lei,COD PRODUS: 535882,26900 lei,Cod: 535882,Cosmetice,248758,1
 testarescoalainfo@gmail.com,papadie456,,Genti din piele naturala,535882,1,26900 lei,COD PRODUS: 535882,26900 lei,Cod: 535882,,,
 testarescoalainfo@gmail.com,papadie456,,Genti din piele naturala,535882,2,26900 lei,COD PRODUS: 535882,53800 lei,Cod: 535882,,,
+testarescoalainfo@gmail.com,papadie456,,Genti din piele naturala,535882,1,26900 lei,COD PRODUS: 535882,26900 lei,Cod: 535882,Cosmetice,248758,1

@@ -47,10 +47,7 @@ namespace Dasha_Automation.Tests.ItemTest
         }
 
 
-        //  [TestCase("Cosmetice", "252833","4.56","4300 lei", false, "OYSTER", "COD PRODUS: 252833")]
-        //  [TestCase("Cosmetice", "248758", "", "13000 lei", false, "ANUBIS", "COD PRODUS: 248758")]
-        //  [TestCase("Genti din piele naturala", "535882", "", "26900 lei", true, "", "COD PRODUS: 535882")]
-        // [Test]
+        
 
         [Category("Item")]
         [Category("Smoke")]

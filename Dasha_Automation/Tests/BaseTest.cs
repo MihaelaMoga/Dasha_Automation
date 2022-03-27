@@ -146,29 +146,42 @@ namespace Dasha_Automation.Tests
             ItemPage selectedItem = new ItemPage(_driver);
 
 
-            if (expectedCodProdus == "252833")
-            {
-                Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem1());
-                //dau click pe produsul cu codul de mai sus
-                selectedItem.GoToItem1Page();
-            }
 
-            if (expectedCodProdus == "248758")
-            {
-                Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem2());
-                selectedItem.GoToItem2Page();
-            }
+ //DE GASIT O SOLUTIE SA FAC O METODA GENERALA IN LOC DE CELE 2 IF-uri de mai jos            
+          
+            
+                       if (expectedCodProdus == "248758")
+                       {
+                           Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem2());
+                           selectedItem.GoToItem2Page();
+                       }
 
-            if (expectedCodProdus == "535882")
-            {
-                Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem3());
-                selectedItem.GoToItem3Page();
-            }
+                       if (expectedCodProdus == "535882")
+                       {
+                           Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem3());
+                           selectedItem.GoToItem3Page();
+                       }
+               
 
         }
 
 
      
+        public void AddTheItemInContinutulCosului(string expectedItemCodeOnContinutulCosului)
+        {
+            //adaug 1 buc in cos
+            AddToCartPage itemToCart = new AddToCartPage(_driver);
+            itemToCart.ClickOnAdauga();
+
+            //verific ca in CONTINUTUL COSULUI s-a adaugat produsul cu codul corect 
+            Assert.AreEqual(expectedItemCodeOnContinutulCosului, itemToCart.CheckCodeItemOnContinutulCosului());
+
+            //verific ca se deschide fereastra CONTINUTUL COSULUI (dupa ce adaug produsul in cos)
+            Assert.AreEqual("«  VEZI SI ALTE PRODUSE", itemToCart.CheckContinutulCosuluiFinal());
+        }
+
+            
+
 
 
 //metoda pt adaugare produse in cos
@@ -179,55 +192,45 @@ namespace Dasha_Automation.Tests
             IntraInCont(expectedEmail, expectedPass, expectedErrMessage);
             GoToItemPageUserIsLogged(expectedItemCategory, expectedCodProdusOnFilter);
 
+            //adaug 1 buc din produs
+            AddTheItemInContinutulCosului(expectedItemCodeOnContinutulCosului);
+           
 
-            //adaug 1 buc in cos
             AddToCartPage itemToCart = new AddToCartPage(_driver);
 
- 
-            itemToCart.ClickOnAdauga();
-
-        //verific ca in CONTINUTUL COSULUI s-a adaugat produsul cu codul corect 
-            Assert.AreEqual(expectedItemCodeOnContinutulCosului, itemToCart.CheckCodeItemOnContinutulCosului());
-
-            //verific ca se deschide fereastra CONTINUTUL COSULUI (dupa ce adaug produsul in cos)
-            //   Assert.AreEqual("«  VEZI SI ALTE PRODUSE", itemToCart.CheckContinutulCosuluiFinal());
-
+            //daca tb sa adaug a 2-a bucata din acelasi produs
             if (expectedQuantity != "1" || expectedQuantityItem2 != "")
             {
-                //din CONTINUTUL COSULUI ma intorc in pagina produsului    
+
+                //din CONTINUTUL COSULUI ma intorc in pagina aceluiasi produs
                 itemToCart.ClickOnVeziSiAlteProduse();
 
-
-                //verific ca m-am intors pe pagina aceluiasi produs
+               //verific ca m-am intors pe pagina aceluiasi produs
                 ItemPage selectedItem = new ItemPage(_driver);
-
-                //verific ca sunt pe pagina aceluiasi produs
                 Assert.AreEqual(expectedItemCodeOnItemPage, selectedItem.CheckCodeOfItem());
-             //   Console.WriteLine(selectedItem.CheckCodeOfItem());
+             
 
-
-                //daca datele de test precizeaza adaugare 2 buc in cos din acelasi produs
-                if (expectedCodProdusOnFilter == "535882" & expectedQuantity == "2" & expectedQuantityItem2 == "")
+            //daca datele de test precizeaza adaugare 2 buc in cos din acelasi produs
+                if (expectedQuantity == "2" & expectedQuantityItem2 == "")
                 {
-                    //adaug inca o bucata din acelasi produs
-                    AddToCartPage itemToCart2ndPieces = new AddToCartPage(_driver);
-                    itemToCart2ndPieces.ClickOnAdauga();
+                //adaug a 2-a buc din acelasi produs
+                 AddTheItemInContinutulCosului(expectedItemCodeOnContinutulCosului);             
 
-                    //assert pt numarul de produse din cos
-                    Assert.AreEqual(expectedCartTotal, itemToCart2ndPieces.CheckCartTotalOnContinutulCosului());
+                //verific ca s-a modificat valoarea totala a comenzii din cos
+                 Assert.AreEqual(expectedCartTotal, itemToCart.CheckCartTotalOnContinutulCosului());
 
 //!!! DE FACUT ASSERT si pt cantitate si pret unitar
                 }
 
-
-                if (expectedQuantity == "1" & expectedQuantityItem2 == "1" & expectedCodProdus2OnFilter == "248758")
+                //daca  a 2-a bucata trebuie sa fie alt produs
+                if (expectedQuantity == "1" & expectedQuantityItem2 == "1")
                 {
-                    GoToItemPageUserIsLogged(expectedItem2Category, expectedCodProdus2OnFilter);
+                 
+                 GoToItemPageUserIsLogged(expectedItem2Category, expectedCodProdus2OnFilter);
 
                  //adaug 1 bucata din al 2-lea produs 
                     AddToCartPage item2ToCart = new AddToCartPage(_driver);
                     item2ToCart.ClickOnAdauga();
-
 
             //cele 2 produse diferite le-am pus intr-o lista
                    List<string> itemToList = new List<string>();
@@ -238,16 +241,19 @@ namespace Dasha_Automation.Tests
                     Assert.IsTrue(itemToList.Contains(item2ToCart.CheckCodeItemOnContinutulCosului()));
                     Assert.IsTrue(itemToList.Contains(itemToCart.CheckCodeItemOnContinutulCosului()));
 
+                    //dupa ce adaug a 2-a bucata in cos: verific ca se deschide fereastra CONTINUTUL COSULUI
+                    Assert.AreEqual("«  VEZI SI ALTE PRODUSE", itemToCart.CheckContinutulCosuluiFinal());
 
- //!!! DE FACUT ASSERT si pt cantitate si pret unitar pt fiecare produs in parte 
+
+
+//!!! DE FACUT ASSERT si pt cantitate si pret unitar pt fiecare produs in parte 
 
                 }
 
             }
                
 
-                //dupa ce adaug a 2-a bucata in cos: verific ca se deschide fereastra CONTINUTUL COSULUI
-               Assert.AreEqual("«  VEZI SI ALTE PRODUSE", itemToCart.CheckContinutulCosuluiFinal());
+              
 
                 
             }

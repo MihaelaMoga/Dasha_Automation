@@ -9,13 +9,11 @@ namespace Dasha_Automation.PageModels.POM
 {
     class ItemPage : BasePage
     {
-       
-        
-        const string codeOfSelectedItem1 = "//*[contains(@data-product-id,'252833')]";//XPath
+
         const string codeOfSelectedItem2 = "//*[contains(@data-product-id,'248758')]";//xpath
         const string codeOfSelectedItem3 = "//*[contains(@data-product-id,'535882')]";//xpath
-        const string nameOfSelectedItem3 = "//h2[@class='product-name']"; //xpath
-
+       
+        
        
         const string codeDisplayedOnItemPage = "product-code"; //class
 
@@ -41,13 +39,6 @@ namespace Dasha_Automation.PageModels.POM
 
 
 
-//metoda care va returna codul produsului
-    public string GetCodeOfItem1()
-        {
-                var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 12, By.XPath(codeOfSelectedItem1));
-                return codProdusElement.GetAttribute("data-product-id");   
-        }
-
 
 
         //metoda care va returna codul produsului
@@ -58,6 +49,9 @@ namespace Dasha_Automation.PageModels.POM
         }
 
 
+
+
+
         public string GetCodeOfItem3()
         {
             var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 12, By.XPath(codeOfSelectedItem3));
@@ -65,28 +59,34 @@ namespace Dasha_Automation.PageModels.POM
         }
 
 
-        //metoda pt a intra pe pagina produsului: https://www.dasha.ro/Samponanti-pigmentgalben-OysterBlondyeAnti-YellowShampoo250ml.html
-        public void GoToItem1Page()
+
+/*
+        //metoda pt a intra pe pagina produsului: 
+        public void GoToItemPageGeneral(string selector)
         {
-            var sampon = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(codeOfSelectedItem1));
-            sampon.Click();
+            var produsGeneralElement = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(selector));
+            produsGeneralElement.Click();
         }
+*/
+        
 
-
-           
-         public void GoToItem2Page()
+                
+        public void GoToItem2Page()
             {
-               var produs2 = Utilities.Utils.WaitForElementClickable(driver,12,(By.XPath(codeOfSelectedItem2)));
-               produs2.Click();
-             }
+            var produs2 = Utilities.Utils.WaitForElementClickable(driver,12,(By.XPath(codeOfSelectedItem2)));
+            produs2.Click();
+            }
+
 
 
         //metoda pt produsele cu discount
-        public void GoToItem3Page()
-        {
-            var produs3 = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(codeOfSelectedItem3));
-            produs3.Click();
-        }
+         public void GoToItem3Page()
+            {
+              var produs3 = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(codeOfSelectedItem3));
+              produs3.Click();
+            }
+      
+
 
 
         //metoda returneaza codul produsului
@@ -96,7 +96,9 @@ namespace Dasha_Automation.PageModels.POM
             return samponElement.Text;
         }
 
-//metoda care retunreaza ratingul produsului
+
+
+//metoda care returneaza ratingul produsului
 
         public string CheckRating()
         { 
@@ -113,13 +115,13 @@ namespace Dasha_Automation.PageModels.POM
             return priceElement.Text;
         }
 
+
 //metoda pt a returna pretul produsului dupa discount
-    public string CheckDiscountPrice()
+        public string CheckDiscountPrice()
         {
             var discountPrice  = Utilities.Utils.WaitForExplicitElement(driver, 4, By.ClassName(discountPriceSelector));
             return discountPrice.Text;
         }
-
 
 
 
