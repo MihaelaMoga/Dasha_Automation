@@ -28,7 +28,7 @@ namespace Dasha_Automation.Tests.FilterTest
         //  [Test]
         [Category("Filter")]
         [Test, TestCaseSource("GetCredentialsDataCsv4"), Order(10)]
-    //    public void ClickOnGenti(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
+    
         public void ClickOnAnyMainCategory(string expectedEmail, string expectedParola, string expectedInvalidLoginErr, string expectedItemCategory, string expectedCategoryName)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -42,14 +42,11 @@ namespace Dasha_Automation.Tests.FilterTest
         //userul completeaza credentiale valide pt a se loga in contul sau
             IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
 
-            //userul da click pe meniul GENTI
-         //   FilterFunctionality filter = new FilterFunctionality(_driver);
-         //   filter.ClickOnGenti();
-
+        //userul da click pe meniul principal GENTI/COSMETICE/INCALTAMINTE/IMBRACAMINTE/NOUTATI/OUTLET (conform info din TestData)
             FilterFunctionality filter = new FilterFunctionality(_driver, expectedItemCategory);
             filter.GoToItemMainCategory();
             
-           // Assert.AreEqual("Genti din piele naturala", filter.CheckMainMenuCategories());
+        //verificam ca am ajuns in meniul corect   
            if(expectedItemCategory != "6")
             {
                 Assert.AreEqual(expectedCategoryName, filter.CheckMainMenuCategories());
