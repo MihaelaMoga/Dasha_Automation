@@ -86,7 +86,7 @@ namespace Dasha_Automation.Tests
 
 
 //metoda pt CITIRE date de test dintr-un Data Table cu ajutorul metodei GetDataTableFromCsv din Utils.cs
-        //am pus metoda asta in BaseTest pt ca o voi folosi urmatoarele clase copil: ModificaParolaTests, LogoutTests, FilterTests, ItemTests
+        //am pus metoda asta in BaseTest pt ca o voi folosi urmatoarele clase copil: ModificaParolaTests, LogoutTests, ItemTests
         public static IEnumerable<TestCaseData> GetCredentialsDataCsv3()
         {
             //variabila csvData returneaza un DataTable
@@ -100,9 +100,28 @@ namespace Dasha_Automation.Tests
 
 
 
+ //metoda pt CITIRE date de test dintr-un Data Table cu ajutorul metodei GetDataTableFromCsv din Utils.cs
+        //am pus metoda asta in BaseTest pt ca o voi folosi urmatoarele clase copil: FilterTests
+        public static IEnumerable<TestCaseData> GetCredentialsDataCsv4()
+        {
+            //variabila csvData returneaza un DataTable
+            var csvData = Utils.GetDataTableFromCsv("TestData\\testDataFilter.csv");
+            for (int i = 0; i < csvData.Rows.Count; i++)
+            {
+                // (fata de metoda GetCredentialsDataCsv(unde tb sa indicam noi cate coloane sunt), in metoda curenta NU tb sa indicam cate coloane avem)
+                yield return new TestCaseData(csvData.Rows[i].ItemArray);
+            }
+        }
+
+
+
+
+
+
+
 
         //metoda pt logarea in cont cu date valide
-            public void IntraInCont2(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
+        public void IntraInCont2(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
             {
             MainPage mainPage = new MainPage(_driver);
             mainPage.CloseTheCookies();
@@ -119,7 +138,11 @@ namespace Dasha_Automation.Tests
 
 
 
-       //metoda pt logarea in cont cu date valide urmat de click pe Iconita Contul meu
+
+
+
+
+//metoda pt logarea in cont cu date valide urmat de click pe Iconita Contul meu
             public void IntraInCont(string expectedEmail, string expectedParolaLogare, string expectedInvalidLoginErr)
             {
             IntraInCont2(expectedEmail, expectedParolaLogare, expectedInvalidLoginErr);
@@ -131,46 +154,36 @@ namespace Dasha_Automation.Tests
 
 
 
-//metoda pt a alege o categorie de produse si apoi pt a intra pe pagina unui produs
-        public void GoToItemPageUserIsLogged(string expectedItemCategory, string expectedCodProdus)
+      
+
+
+
+
+    //metoda pt a alege o categorie de produse si apoi pt a intra pe pagina unui produs
+    //    public void GoToItemPageUserIsLogged(string expectedItemCategory, string expectedCodProdus)
+      //  public void GoToItemPageUserIsLogged(string expectedItemCategory, string expectedCodProdus)
+        public void GoToItemPageUserIsLogged(string expectedItemCategory, string expectedCategoryName, string expectedCodProdus)
         {
 
-            //merg pe pagina Cosmetice
-            FilterFunctionality filter = new FilterFunctionality(_driver);
+      //merg pe pagina INCALTAMINTE/IMBRACAMINTE/GENTI/COSMETICE/NOUTATI/OUTLET conform datelor din TestData
+      //!!! am folosit encapsulation pt a citi valorile lui expectedItemCategory din TestData (=> am evitat IF-urile pt fiecare expectedItemCategory)
+            FilterFunctionality filter = new FilterFunctionality(_driver,expectedItemCategory);
+            filter.GoToItemMainCategory();
+            Assert.AreEqual(expectedCategoryName, filter.CheckMainMenuCategories());
 
-            if (expectedItemCategory == "Cosmetice")
-            {
-                filter.ClickOnCosmetice();
-                //verific ca am ajuns pe pagina COSMETICE
-                Assert.AreEqual(expectedItemCategory, filter.CheckMainMenuCategories());
-            }
 
-            if (expectedItemCategory == "Genti din piele naturala")
-            {
-                filter.ClickOnGenti();
-                Assert.AreEqual(expectedItemCategory, filter.CheckMainMenuCategories());
-            }
+       //in pagina de search "Cosemtice"/"Genti din piele naturala"/etc: dau click pe pagina produsului cu expectedCodProdus din TestData
+       // !!! am folosit encapsulation cu metoda de Getter pt a citi valorile lui expectedCodProdus din TestData
+            ItemPage selectedItem = new ItemPage(_driver, expectedCodProdus);
+            selectedItem.GoToItemPageGeneral();
 
-            //inainte sa selectez produsul, gasesc si verific codul produsului
-            ItemPage selectedItem = new ItemPage(_driver);
-
- //DE GASIT O SOLUTIE SA FAC O METODA GENERALA IN LOC DE CELE 2 IF-uri de mai jos            
-                       if (expectedCodProdus == "248758")
-                       {
-                           Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem2());
-                           selectedItem.GoToItem2Page();
-                       }
-
-                       if (expectedCodProdus == "535882")
-                       {
-                           Assert.AreEqual(expectedCodProdus, selectedItem.GetCodeOfItem3());
-                           selectedItem.GoToItem3Page();
-                       }
         }
 
 
-     
-        
+
+
+
+        //metoda pt a adauga 1 buc in cos (orice produs)      
         public void AddTheItemInContinutulCosului(string expectedItemCodeOnContinutulCosului)
         {
             //adaug 1 buc in cos
@@ -186,24 +199,26 @@ namespace Dasha_Automation.Tests
 
             
 
+  
 
 
-//metoda pt adaugare produse in cos (1 buc produs X, 2 buc produs X, 1 buc produs X si 1 buc produs Y) 
+//metoda pt adaugare produse in cos (2 buc produs X, 1 buc produs X si 1 buc produs Y) 
 
-        public void AddToCartUserIsLogged(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdusOnFilter, string expectedQuantity, string expectedUnitPrice, string expectedItemCodeOnItemPage, string expectedCartTotal, string expectedItemCodeOnContinutulCosului, string expectedItem2Category, string expectedCodProdus2OnFilter, string expectedQuantityItem2)
+        public void AddToCartUserIsLogged(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCategoryName, string expectedCodProdusOnFilter, string expectedQuantity, string expectedUnitPrice, string expectedItemCodeOnItemPage, string expectedCartTotal, string expectedItemCodeOnContinutulCosului, string expectedItem2Category, string expectedCategory2Name, string expectedCodProdus2OnFilter, string expectedQuantityItem2)
         {
 
             IntraInCont(expectedEmail, expectedPass, expectedErrMessage);
-            GoToItemPageUserIsLogged(expectedItemCategory, expectedCodProdusOnFilter);
+            GoToItemPageUserIsLogged(expectedItemCategory, expectedCategoryName,expectedCodProdusOnFilter);
 
-            //adaug 1 buc din produs
+            //adaug 1 buc din produsul X
             AddTheItemInContinutulCosului(expectedItemCodeOnContinutulCosului);
            
 
             AddToCartPage itemToCart = new AddToCartPage(_driver);
 
-            //daca tb sa adaug a 2-a bucata din acelasi produs
-            if (expectedQuantity != "1" || expectedQuantityItem2 != "")
+            //daca tb sa adaug a 2 buc in cos
+            //  if (expectedQuantity != "1" || expectedQuantityItem2 != "")
+            if (expectedQuantity == "2" || expectedQuantityItem2 != "")
             {
 
                 //din CONTINUTUL COSULUI ma intorc in pagina aceluiasi produs
@@ -214,7 +229,7 @@ namespace Dasha_Automation.Tests
                 Assert.AreEqual(expectedItemCodeOnItemPage, selectedItem.CheckCodeOfItem());
              
 
-            //daca datele de test precizeaza adaugare 2 buc in cos din acelasi produs
+            //daca datele de test precizeaza adaugare 2 buc in cos din acelasi produs => 2 buc din produsul X
                 if (expectedQuantity == "2" & expectedQuantityItem2 == "")
                 {
                 //adaug a 2-a buc din acelasi produs
@@ -230,7 +245,7 @@ namespace Dasha_Automation.Tests
                 if (expectedQuantity == "1" & expectedQuantityItem2 == "1")
                 {
                  
-                 GoToItemPageUserIsLogged(expectedItem2Category, expectedCodProdus2OnFilter);
+                 GoToItemPageUserIsLogged(expectedItem2Category, expectedCategory2Name, expectedCodProdus2OnFilter);
 
                  //adaug 1 bucata din al 2-lea produs 
                     AddToCartPage item2ToCart = new AddToCartPage(_driver);

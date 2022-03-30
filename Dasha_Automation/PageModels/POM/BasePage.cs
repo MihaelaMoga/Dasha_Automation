@@ -8,7 +8,7 @@ namespace Dasha_Automation.PageModels.POM
     public class BasePage
     {
         public IWebDriver driver;
-
+      
 
 
 

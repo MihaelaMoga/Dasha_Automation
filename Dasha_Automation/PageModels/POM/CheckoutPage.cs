@@ -9,11 +9,10 @@ namespace Dasha_Automation.PageModels.POM
     {
 
         const string veziDetaliiCosSelector = "btn-pink"; //class
-
         const string produseComandateSelector = "#cartDetails > thead > tr.hidden-xs > th.col-xs-6.col-sm-5";//css
+
+        //selector pt codul oricarui produs
         const string codeItemOnCheckoutPage = "//tr/td[2]/p[2]"; //fragment de xpath
-       // const string codeItem2OnCheckoutPage = "//*[tr[2]/td[2]/p[2]]"; //fragment de xpath
-        const string codeItem2OnCheckoutPage = "//*[@id='item-Product_535882']/td[2]/p[2]"; //fragment de xpath
 
         const string pasulUrmatorCheckoutSelector = "next-step-checkout"; //id
         const string adresaLivrareLabel = "predefined-shipping-addresses-head"; //class
@@ -24,6 +23,8 @@ namespace Dasha_Automation.PageModels.POM
         public CheckoutPage(IWebDriver driver) : base(driver)
         {
         }
+
+
 
     //metoda prin care dau click pe VEZI DETALII COS ca sa ajung in CheckoutPage
         public void ClickOnVeziDetaliiCos()
@@ -50,11 +51,6 @@ namespace Dasha_Automation.PageModels.POM
             return itemCodeOnCheckoutPage.Text;
         }
 
-    public string CheckItem2Code()
-        {
-            var item2CodeCheckoutPage = driver.FindElement(By.XPath(codeItem2OnCheckoutPage));
-            return item2CodeCheckoutPage.Text;
-        }
 
 
     //metoda pt a da click pe butonul PASUL URMATOR din pagian de checkout 

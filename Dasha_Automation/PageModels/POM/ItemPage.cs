@@ -9,24 +9,30 @@ namespace Dasha_Automation.PageModels.POM
 {
     class ItemPage : BasePage
     {
+       
 
-        const string codeOfSelectedItem2 = "//*[contains(@data-product-id,'248758')]";//xpath
-        const string codeOfSelectedItem3 = "//*[contains(@data-product-id,'535882')]";//xpath
-       
-        
-       
+//selector ca sa selectez produsul din TestData
+   //    const string codeOfSelectedItem2 = "//*[contains(@data-product-id,'248758')]";//xpath
+   //    const string codeOfSelectedItem3 = "//*[contains(@data-product-id,'535882')]";//xpath
+
+   //!!! in loc de xpath-ul prea specific al celor 2 produse, am sa aplic encapsulation
+        string code;
+        string itemSelectedFromSearchPagePart1 = "//*[contains(@data-product-id,'";//xpath
+        string itemSelectedFromSearchPagePart3 = "')]";//xpath
+
+
+
+//selector dupa ce intru pe pagina produsului
         const string codeDisplayedOnItemPage = "product-code"; //class
-
-        const string ratingSelector = "rating-average";//class
-      
-        const string priceSelector = "product-price";//class
-       
+        const string ratingSelector = "rating-average";//class  
+        const string priceSelector = "product-price";//class      
         const string discountPriceSelector = "product-price-pink"; //class
-       
-
         const string telefonSelector = "google_forwarding_number"; //class
         const string producatorSelector = "#tabs > div:nth-child(2) > p > a";//css
-      
+
+       
+
+
 
 
 
@@ -38,54 +44,33 @@ namespace Dasha_Automation.PageModels.POM
 
 
 
-
-
-
-        //metoda care va returna codul produsului
-        public string GetCodeOfItem2()
+        //constructor pt encapsulation cu 2 parametrii: code (ulterior cand voi crea obiectul ItemPage, prin metoda GetCode() de la encapsulation: this.code = expectedCodProdus din TestData) si driver
+        public ItemPage(IWebDriver driver, string code) : base(driver)
         {
-            var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 12, By.XPath(codeOfSelectedItem2));
-            return codProdusElement.GetAttribute("data-product-id");
+            this.code = code;
+        }
+
+
+        //metoda Getter pt encapsulation; GetCode() va citi expectedCodProdus din TestData
+        public string GetCode()
+        {
+        return this.code;    
         }
 
 
 
 
-
-        public string GetCodeOfItem3()
+        
+//metoda pt a intra pe pagina oricarui produs avand in vedere ca xpath este de genul "//*[contains(@data-product-id,'535882')]" 
+        public void GoToItemPageGeneral()
         {
-            var codProdusElement = Utilities.Utils.WaitForExplicitElement(driver, 12, By.XPath(codeOfSelectedItem3));
-            return codProdusElement.GetAttribute("data-product-id");
-        }
-
-
-
-/*
-        //metoda pt a intra pe pagina produsului: 
-        public void GoToItemPageGeneral(string selector)
-        {
-            var produsGeneralElement = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(selector));
+            var itemSelectedFromSearchPageSelector = itemSelectedFromSearchPagePart1 + GetCode() + itemSelectedFromSearchPagePart3;//xpath
+            var produsGeneralElement = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(itemSelectedFromSearchPageSelector));
             produsGeneralElement.Click();
         }
-*/
-        
-
-                
-        public void GoToItem2Page()
-            {
-            var produs2 = Utilities.Utils.WaitForElementClickable(driver,12,(By.XPath(codeOfSelectedItem2)));
-            produs2.Click();
-            }
 
 
 
-        //metoda pt produsele cu discount
-         public void GoToItem3Page()
-            {
-              var produs3 = Utilities.Utils.WaitForElementClickable(driver, 12, By.XPath(codeOfSelectedItem3));
-              produs3.Click();
-            }
-      
 
 
 
@@ -119,7 +104,7 @@ namespace Dasha_Automation.PageModels.POM
 //metoda pt a returna pretul produsului dupa discount
         public string CheckDiscountPrice()
         {
-            var discountPrice  = Utilities.Utils.WaitForExplicitElement(driver, 4, By.ClassName(discountPriceSelector));
+            var discountPrice  = Utilities.Utils.WaitForExplicitElement(driver, 10, By.ClassName(discountPriceSelector));
             return discountPrice.Text;
         }
 

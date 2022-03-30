@@ -19,71 +19,17 @@ namespace Dasha_Automation.Tests.FilterTest
 
 //Nota: metoda de CITIRE a datelor de teste este GetCredentialsDataCsv3 si se afla in clasa parinte BaseTest.cs
 
-        
-        //metoda pt a ajunge pe pagina de INCALTAMINTE
-        //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        // [Test]
-        [Category("Filter")]
-        [Test,TestCaseSource("GetCredentialsDataCsv3"), Order(8)]
-        public void ClickOnIncaltaminte(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
-        {
-
-            //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
-            testName = TestContext.CurrentContext.Test.Name;
-            _test = _extent.CreateTest(testName);
-
-            //userul deschide pagina princilala a site-ului
-            _driver.Navigate().GoToUrl(url);
-
- 
-        //userul completeaza credentialele valide pt a se loga in contul sau
-            IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
-            
-
-            //userul da click pe meniul INCALTAMINTE
-            FilterFunctionality filter = new FilterFunctionality(_driver);
-            filter.ClickOnIncaltaminte();
-
-            Assert.AreEqual("Încălțăminte dama din piele naturala", filter.CheckMainMenuCategories());
-        }
 
 
 
 
-        //metoda pt a ajunge pe pagina de IMBRACAMINTE
-        //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        //   [Test]
-        [Category("Filter")]
-        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(9)]
-        public void ClickOnImbracaminte(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
-        {
-            //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
-            testName = TestContext.CurrentContext.Test.Name;
-            _test = _extent.CreateTest(testName);
-
-            //userul deschide pagina princilala a site-ului
-            _driver.Navigate().GoToUrl(url);
-
-         //userul completeaza credentialele valide pt a se loga in contul sau
-            IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
-
-        //userul da click pe meniul IMBRACAMINTE
-            FilterFunctionality filter = new FilterFunctionality(_driver);
-            filter.ClickOnImbracaminte();
-
-            Assert.AreEqual("Haine dama", filter.CheckMainMenuCategories());
-        }
-
-
-
-
-
-        //metoda pt a ajunge pe pagina de GENTI
+ //metoda pt a ajunge pe pagina de INCALTAMINTE/IMBRACAMINTE/GENTI/COSMETICE/NOUTATI/OUTLET
         //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
         //  [Test]
         [Category("Filter")]
-        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(10)]
-        public void ClickOnGenti(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
+        [Test, TestCaseSource("GetCredentialsDataCsv4"), Order(10)]
+    //    public void ClickOnGenti(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
+        public void ClickOnAnyMainCategory(string expectedEmail, string expectedParola, string expectedInvalidLoginErr, string expectedItemCategory, string expectedCategoryName)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
             testName = TestContext.CurrentContext.Test.Name;
@@ -96,159 +42,26 @@ namespace Dasha_Automation.Tests.FilterTest
         //userul completeaza credentiale valide pt a se loga in contul sau
             IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
 
-        //userul da click pe meniul GENTI
-            FilterFunctionality filter = new FilterFunctionality(_driver);
-            filter.ClickOnGenti();
+            //userul da click pe meniul GENTI
+         //   FilterFunctionality filter = new FilterFunctionality(_driver);
+         //   filter.ClickOnGenti();
+
+            FilterFunctionality filter = new FilterFunctionality(_driver, expectedItemCategory);
+            filter.GoToItemMainCategory();
             
-            Assert.AreEqual("Genti din piele naturala", filter.CheckMainMenuCategories());
+           // Assert.AreEqual("Genti din piele naturala", filter.CheckMainMenuCategories());
+           if(expectedItemCategory != "6")
+            {
+                Assert.AreEqual(expectedCategoryName, filter.CheckMainMenuCategories());
+            }
+            else
+            {
+                Assert.AreEqual(expectedCategoryName, filter.CheckOutletPage());
+            }
         }
 
+       
 
-
-
-
-
-
-
-
-
-
-        //metoda pt a ajunge in submeniul COSMETICE
-        // [Test]
-        [Category("Filter")]
-        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(11)]
-        public void ClickOnCosmetice(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
-        {
-            //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
-            testName = TestContext.CurrentContext.Test.Name;
-            _test = _extent.CreateTest(testName);
-
-
-            //merg pe pagina princilala a site-ului
-            _driver.Navigate().GoToUrl(url);
-
-            //userul completeaza credentiale valide pt a se loga in contul sau
-            IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
-
-            //userul da click pe meniul COSMETICE
-            FilterFunctionality filter = new FilterFunctionality(_driver);
-            filter.ClickOnCosmetice();
-            Assert.AreEqual("Cosmetice", filter.CheckMainMenuCategories());
-        }
-
-
-
-
-
-
-        //metoda pt a ajunge in pagina de COSMETICE/INGRIJIREA TENULUI
-        //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        //  [Test]
-        [Category("Filter")]
-        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(12)]
-        public void ClickOnIngrijireaTenului(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
-        {
-
-            //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
-            testName = TestContext.CurrentContext.Test.Name;
-            _test = _extent.CreateTest(testName);
-
-            //merg pe pagina princilala a site-ului
-            _driver.Navigate().GoToUrl(url);
-
-            //userul completeaza credentiale valide pt a se loga in contul sau
-         //   IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
-
-            //userul da click pe meniul COSMETICE/Ingrijirea Tenului
-            FilterFunctionality filter = new FilterFunctionality(_driver);
-  
-            filter.ClickOnIngrijireaTenului();
-
-              Assert.AreEqual("Ingrijirea tenului", filter.CheckSubmenuCategories());
-        }
-
-
-
-
-        //metoda pt a ajunge in pagina de COSMETICE/INGRIJIREA PARULUI
-        //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        //  [Test]
-        [Category("Filter")]
-        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(13)]
-        public void ClickOnIngrijireaParului(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
-        {
-
-            //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
-            testName = TestContext.CurrentContext.Test.Name;
-            _test = _extent.CreateTest(testName);
-
-            //merg pe pagina princilala a site-ului
-            _driver.Navigate().GoToUrl(url);
-
-            //userul completeaza credentiale valide pt a se loga in contul sau
-            //   IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
-
-            //userul da click pe submeniul COSMETICE/Ingrijirea Parului
-            FilterFunctionality filter = new FilterFunctionality(_driver);
-            filter.ClickOnIngrijireaParului();
-            Assert.AreEqual("Ingrijirea parului", filter.CheckSubmenuCategories());
-        }
-
-
-
-        //metoda pt a ajunge in pagina de NOUTATI
-        //[TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        // [Test]
-        [Category("Filter")]
-        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(14)]
-        public void ClickOnNoutati(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
-        {
-            //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
-            testName = TestContext.CurrentContext.Test.Name;
-            _test = _extent.CreateTest(testName);
-
-            //merg pe pagina princilala a site-ului
-            _driver.Navigate().GoToUrl(url);
-
-        //userul completeaza credentialele valide pt a se loga in contul sau
-            IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
-
-        //dau click pe meniul NOUTATI
-            FilterFunctionality filter = new FilterFunctionality(_driver);
-            filter.ClickOnNoutati();
-
-
-            Assert.AreEqual("Produse nou adaugate", filter.CheckMainMenuCategories());
-        }
-
-
-
-
-
-
-        //metoda pt a ajunge in pagina de OUTLET
-        //  [TestCase("testarescoalainfo@gmail.com", "papadie456", "")]
-        // [Test]
-        [Category("Filter")]
-        [Test, TestCaseSource("GetCredentialsDataCsv3"), Order(15)]
-        public void ClickOnOutlet(string expectedEmail, string expectedParola, string expectedInvalidLoginErr)
-        {
-            //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
-            testName = TestContext.CurrentContext.Test.Name;
-            _test = _extent.CreateTest(testName);
-
-            //userul deschide pagina princilala a site-ului
-            _driver.Navigate().GoToUrl(url);
-
-        //userul completeaza credentiale valide pt a se loga in contul sau
-            IntraInCont(expectedEmail, expectedParola, expectedInvalidLoginErr);
-
-        //userul da click pe meniul OUTLET
-            FilterFunctionality filter = new FilterFunctionality(_driver);
-            filter.ClickOnOutlet();
-
-            Assert.AreEqual("OUTLET", filter.CheckOutletPage());
-        }
 
     }
 }

@@ -9,8 +9,10 @@ namespace Dasha_Automation.PageModels.POM
     {
 
 
-        const string adaugaInCosButtonSelector = "//*[@id='bodyBody']/div[4]/div/div[4]/div[2]"; //parte din full xpath
-                                                                                                 
+     
+         const string adaugaInCosButtonSelector = "//*[@id='bodyBody']/div[4]/div/div[4]/div[2]/div/div[2]/button"; //parte din full xpath
+
+
         const string expectedItemCodeOnContinutulCosului = "#dHF > div.header-cart > div > span > div > div.products > div > p";//css
         const string cartTotal = "price-formatted"; //class
         
@@ -28,21 +30,18 @@ namespace Dasha_Automation.PageModels.POM
     //metoda prin care adaug produsul in cos
         public void ClickOnAdauga()
         {
-            var adaugaButtonElement = Utilities.Utils.WaitForExplicitElement(driver, 20, By.XPath(adaugaInCosButtonSelector));
-            adaugaButtonElement.Click();
+            var adaugaButtonElement = Utilities.Utils.WaitForElementClickable(driver, 20, By.XPath(adaugaInCosButtonSelector));
+            adaugaButtonElement.Click();  
         }
 
 
 
 
 
-
-
-
-    //metoda care verifica ca in cos a fost adaugat produsul cu codul corect
+    //metoda care returneaza codul produsului
         public string CheckCodeItemOnContinutulCosului()
         {
-            var itemCodeInContinutulCosului = Utilities.Utils.WaitForExplicitElement(driver,10,By.CssSelector(expectedItemCodeOnContinutulCosului));
+            var itemCodeInContinutulCosului = Utilities.Utils.WaitForExplicitElement(driver,15,By.CssSelector(expectedItemCodeOnContinutulCosului));
             return itemCodeInContinutulCosului.Text;
         }
 
@@ -69,7 +68,8 @@ namespace Dasha_Automation.PageModels.POM
         }
 
 
-    //metoda care da click pe butonul "VEZI SI ALTE PRODUSE"
+
+    //metoda cu care care userul da click pe butonul "VEZI SI ALTE PRODUSE"
         public void ClickOnVeziSiAlteProduse()
         {
             var veziSiAlteProduseButtonEl = Utilities.Utils.WaitForExplicitElement(driver, 5, By.CssSelector(veziSiAlteProduseButton));

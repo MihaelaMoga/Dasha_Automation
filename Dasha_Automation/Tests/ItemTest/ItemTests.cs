@@ -9,15 +9,15 @@ using System.Threading;
 
 namespace Dasha_Automation.Tests.ItemTest
 {
-    class ItemTests : BaseTest
+    public class ItemTests : BaseTest
     {
 
         //URL-ul paginii principale a site-ului  
         string url = Utilities.FrameworkConstants.GetUrl();
+       
 
 
-      
-//metoda pt CITIRE TestData din fisier de tip csv
+        //metoda pt CITIRE TestData din fisier de tip csv
         //citesc datele de test din fisierul testDataLogin.csv care e salvat pe calea TestData\\testDataLogin.csv
         private static IEnumerable<TestCaseData> GetCredentialsDataCsv()
         {
@@ -39,7 +39,7 @@ namespace Dasha_Automation.Tests.ItemTest
                     if (index > 0)
                     {
                         //valorile astfel separate sunt returnate ca array de valori, valorile fiind despartite prin virgula
-                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), values[4].Trim(), values[5].Trim(), values[6].Trim(), bool.Parse(values[7].Trim()), values[8].Trim(), values[9].Trim());
+                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), values[4].Trim(),values[5].Trim(), values[6].Trim(), values[7].Trim(), bool.Parse(values[8].Trim()), values[9].Trim(), values[10].Trim());
                     }
                     index++;
                 }
@@ -47,12 +47,12 @@ namespace Dasha_Automation.Tests.ItemTest
         }
 
 
-        
+
 
         [Category("Item")]
         [Category("Smoke")]
         [Test, Order(16), TestCaseSource("GetCredentialsDataCsv")]
-        public void ItemPage(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCodProdusOnFilter, string expectedRating, string expectedUnitPrice, bool discountPrice, string expectedProducator,string expectedItemCodeOnItemPage)
+        public void ItemPage(string expectedEmail, string expectedPass, string expectedErrMessage, string expectedItemCategory, string expectedCategoryName, string expectedCodProdusOnFilter, string expectedRating, string expectedUnitPrice, bool discountPrice, string expectedProducator,string expectedItemCodeOnItemPage)
         {
 
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report
@@ -67,7 +67,7 @@ namespace Dasha_Automation.Tests.ItemTest
          //userul merge pe pagina principala si apoi se logheaza 
             IntraInCont(expectedEmail, expectedPass, expectedErrMessage);
          //userul alege categoria de produse si merge pe pagina unui produs
-            GoToItemPageUserIsLogged(expectedItemCategory, expectedCodProdusOnFilter);
+            GoToItemPageUserIsLogged(expectedItemCategory, expectedCategoryName, expectedCodProdusOnFilter);
 
             
             ItemPage selectedItem = new ItemPage(_driver);
@@ -109,7 +109,11 @@ namespace Dasha_Automation.Tests.ItemTest
                 //merg pe site-ul producatorului si apoi Back => de verificat ca m-am intors pe pagina produsului
                 selectedItem.ClickOnNumeProducator();
             }
+
+         
+          
         }
+       
 
 
 
