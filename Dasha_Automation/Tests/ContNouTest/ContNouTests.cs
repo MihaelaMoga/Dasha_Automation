@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 
@@ -117,89 +118,124 @@ namespace Dasha_Automation.Tests.ContNouTest
           
 
         }
- 
-
-
-       
-
-
-         //TC: Verify user cannot register a new Dasha account using INVALID data
-                //Nume invalid: Nume din 2 litere
-                [TestCase("eu", "Craciun", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //caz invalid: Nume din 3 caractere dar incepe numai 2 litere
-                [TestCase("e12", "Craciun", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //caz invalid: Nume din 3 numere
-                [TestCase("123", "Craciun", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //caz invalid: Nume din 2 litere si 1 caracter special
-                [TestCase("12.", "Craciun", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
 
 
 
 
+        /*
 
-                //Prenume invalid: 
-                [TestCase("Ion", "eu", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //caz invalid: Nume din 3 caractere dar incepe numai 2 litere
-                [TestCase("Ion", "e12", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //caz invalid: Nume din 3 numere
-                [TestCase("Ion", "123", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //caz invalid: Nume din 2 litere si 1 caracter special
-                [TestCase("Ion", "12.", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-
-
-
-                //Email invalid:
-                //lipseste @
-                [TestCase("Ion", "Ana", "ago.ro", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //lipseste punctul 
-                [TestCase("Ion", "Ana", "a@goro", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //nici un caracter intre @ si punct
-                [TestCase("Ion", "Ana", "aa@.ro", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //nimic dupa punct
-                [TestCase("Ion", "Ana", "a@go.", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                //doar caracter special inainte de @
-                [TestCase("Ion", "Ana", "/@go.ro", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-
-
-
-                //Parola invalida
-                [TestCase("Ion", "Ana", "bambus@yahoo.com", "pa", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                [TestCase("Ion", "Ana", "bambus@yahoo.com", "12", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                [TestCase("Ion", "Ana", "bambus@yahoo.com", "1#", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                 //TC: Verify user cannot register a new Dasha account using INVALID data
+                        //Nume invalid: Nume din 2 litere
+                        [TestCase("eu", "Craciun", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //caz invalid: Nume din 3 caractere dar incepe numai 2 litere
+                        [TestCase("e12", "Craciun", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //caz invalid: Nume din 3 numere
+                        [TestCase("123", "Craciun", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //caz invalid: Nume din 2 litere si 1 caracter special
+                        [TestCase("12.", "Craciun", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
 
 
 
 
-     //ALTE CAZURI INVALIDE
-                //campurile Nume, Prenume, Email, Parola si termenii sunt mandatory
-                //userul NU completeaza unul din campurile Nume, Prenume, Email, Parola
-                [TestCase("", "Violeta", "abc@yahoo.com", "balauri", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                [TestCase("Ioana", "", "abc@yahoo.com", "balauri", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-                [TestCase("Ioana", "Violeta", "", "balauri", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
 
-                [TestCase("Ioana", "Violeta", "abc@yahoo.com", "", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
-
-
-            //userul NU bifeaza termenii (checkbox Mandatory)
-                [TestCase("Ioana", "Violeta", "abc@yahoo.com", "balauri", true, false, "", "Trebuie sa fiti de acord cu termenii si conditiile.", "")]
-
-
-                //userul nu completeaza Nume si NU bifeaza termenii - NU-MI IESE
-                [TestCase("", "Violeta", "abc@yahoo.com", "balauri", true, false, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "Trebuie sa fiti de acord cu termenii si conditiile.", "")]
-
-                //userul NU completeaza nici un camp - NU-MI IESE
-                [TestCase("", "", "", "", false, false, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "Trebuie sa fiti de acord cu termenii si conditiile.", "")]
+                        //Prenume invalid: 
+                        [TestCase("Ion", "eu", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //caz invalid: Nume din 3 caractere dar incepe numai 2 litere
+                        [TestCase("Ion", "e12", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //caz invalid: Nume din 3 numere
+                        [TestCase("Ion", "123", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //caz invalid: Nume din 2 litere si 1 caracter special
+                        [TestCase("Ion", "12.", "perna@yahoo.com", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
 
 
 
+                        //Email invalid:
+                        //lipseste @
+                        [TestCase("Ion", "Ana", "ago.ro", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //lipseste punctul 
+                        [TestCase("Ion", "Ana", "a@goro", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //nici un caracter intre @ si punct
+                        [TestCase("Ion", "Ana", "aa@.ro", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //nimic dupa punct
+                        [TestCase("Ion", "Ana", "a@go.", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        //doar caracter special inainte de @
+                        [TestCase("Ion", "Ana", "/@go.ro", "parola", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
 
-        //userul completeaza un email deja folosit la crearea unui cont => apare mesaj de eroare: Exista deja un cont cu aceasta adresa de email    
-                [TestCase("Ioana", "Dragomir", "cirja@yahoo.com", "balauri", false, true, "", "", "Exista deja un cont cu aceasta adresa de email")]
+
+
+                        //Parola invalida
+                        [TestCase("Ion", "Ana", "bambus@yahoo.com", "pa", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        [TestCase("Ion", "Ana", "bambus@yahoo.com", "12", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        [TestCase("Ion", "Ana", "bambus@yahoo.com", "1#", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+
+
+
+
+             //ALTE CAZURI INVALIDE
+                        //campurile Nume, Prenume, Email, Parola si termenii sunt mandatory
+                        //userul NU completeaza unul din campurile Nume, Prenume, Email, Parola
+                        [TestCase("", "Violeta", "abc@yahoo.com", "balauri", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        [TestCase("Ioana", "", "abc@yahoo.com", "balauri", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+                        [TestCase("Ioana", "Violeta", "", "balauri", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+
+                        [TestCase("Ioana", "Violeta", "abc@yahoo.com", "", true, true, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "", "")]
+
+
+                    //userul NU bifeaza termenii (checkbox Mandatory)
+                        [TestCase("Ioana", "Violeta", "abc@yahoo.com", "balauri", true, false, "", "Trebuie sa fiti de acord cu termenii si conditiile.", "")]
+
+
+                        //userul nu completeaza Nume si NU bifeaza termenii - NU-MI IESE
+                        [TestCase("", "Violeta", "abc@yahoo.com", "balauri", true, false, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "Trebuie sa fiti de acord cu termenii si conditiile.", "")]
+
+                        //userul NU completeaza nici un camp - NU-MI IESE
+                        [TestCase("", "", "", "", false, false, "Toate campurile sunt obligatorii. Va rugam sa completati campurile ramase necompletate", "Trebuie sa fiti de acord cu termenii si conditiile.", "")]
+
+
+
+
+                //userul completeaza un email deja folosit la crearea unui cont => apare mesaj de eroare: Exista deja un cont cu aceasta adresa de email    
+                        [TestCase("Ioana", "Dragomir", "cirja@yahoo.com", "balauri", false, true, "", "", "Exista deja un cont cu aceasta adresa de email")]
+
+        */
+
+
+        //metoda pt CITIRE TestData din fisier de tip csv
+        //citesc datele de test din fisierul invalidCredentials.csv care e salvat pe calea TestData\\invalidCredentials.csv
+        private static IEnumerable<TestCaseData> GetCredentialsDataCsv()
+        {
+            string path = "TestData\\invalidCredentials.csv";
+            //using permite sa folosim variabila reader in metoda de mai jos DOAR pe durata lui using
+            //=> cand se incheie using, reader e distrusa (disposed)
+            //=> using e utila cand avem de citit fisiere sau de facut CONEXIUNI LA BAZA DE DATE (inchide singur conexiunea)
+            var index = 0;
+            using (var reader = new StreamReader(path))
+            {
+                //atata timp cat nu ajung la finalul csv-ului
+                while (!reader.EndOfStream)
+                {
+                    //citesc fiecare linie din fisierul csv
+                    var line = reader.ReadLine();
+                    //valorile dintr-o linie din csv sunt separate prin virgula
+                    var values = line.Split(',');
+                    //pentru fiecare linie , mai putin headerul
+                    if (index > 0)
+                    {
+                        //valorile astfel separate sunt returnate ca array de valori, valorile fiind despartite prin virgula
+                        yield return new TestCaseData(values[0].Trim(), values[1].Trim(), values[2].Trim(), values[3].Trim(), bool.Parse(values[4].Trim()), bool.Parse(values[5].Trim()), values[6].Trim(), values[7].Trim(), values[8].Trim());
+                    }
+                    index++;
+                }
+            }
+        }
+
+
+
 
 
 
         [Category("ContNou")]
-        [Test, Order(5)]
+        [Test, TestCaseSource("GetCredentialsDataCsv"),Order(5)]
         public void ContNouInvalid(string expectedNume, string expectedPrenume, string expectedEmail, string expectedParola, bool newsletter, bool terms, string expected4FieldsErrMessage, string expectedTermsAlertErr, string expectedSameEmailErrMessage)
         {
             //urmatoarele 2 linii sunt necesare pt ca Testul sa apara in Test Report

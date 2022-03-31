@@ -25,7 +25,7 @@ namespace Dasha_Automation.PageModels.POM
 //selector dupa ce intru pe pagina produsului
         const string codeDisplayedOnItemPage = "product-code"; //class
         const string ratingSelector = "rating-average";//class  
-        const string priceSelector = "product-price";//class      
+        const string priceSelector = "product-price";//class                    
         const string discountPriceSelector = "product-price-pink"; //class
         const string telefonSelector = "google_forwarding_number"; //class
         const string producatorSelector = "#tabs > div:nth-child(2) > p > a";//css
@@ -104,7 +104,8 @@ namespace Dasha_Automation.PageModels.POM
 //metoda pt a returna pretul produsului dupa discount
         public string CheckDiscountPrice()
         {
-            var discountPrice  = Utilities.Utils.WaitForExplicitElement(driver, 10, By.ClassName(discountPriceSelector));
+          var discountPrice  = Utilities.Utils.WaitForExplicitElement(driver, 10, By.ClassName(discountPriceSelector));
+            
             return discountPrice.Text;
         }
 

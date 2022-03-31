@@ -40,7 +40,7 @@ namespace Dasha_Automation.Utilities
 
         public static IWebElement WaitForFluentElement(IWebDriver driver, int seconds, By locator)
         {
-            //definim un fluentWait in driverul nostru
+            //definim un obiect fluentWait in driverul nostru
             DefaultWait<IWebDriver> fluentWait = new DefaultWait<IWebDriver>(driver)
 
             //initializam proprietatile obiectului fluentWait
@@ -59,7 +59,7 @@ namespace Dasha_Automation.Utilities
            
 
             
-            //in paranteze rotunde apare ca se asteapta pana cand gasim elementul cu locator (ID btn2) in pagina
+            //in paranteze rotunde apare ca se asteapta pana cand gasim elementul cu locatorul respectiv in pagina
             //dupa ce gaseste elementul in pagina, returneaza fluentWait
             return fluentWait.Until(x => x.FindElement(locator));
         }
@@ -140,7 +140,7 @@ namespace Dasha_Automation.Utilities
         {
             
             var jsExecutor = (IJavaScriptExecutor)driver;
-            //result returneaza un obiect
+           //result returneaza un obiect
            var result = jsExecutor.ExecuteScript(script);
             if(result != null)
             {
@@ -391,8 +391,8 @@ namespace Dasha_Automation.Utilities
 
 //metoda de CRIPTARE pe care o vom folosi pt a ascunde datele cu care ma conectez la server
 //deci metoda ia un sir de caractere (adica datele de conectare la server) si pe baza unei chei de criptare + metode de criptare gen tripleDESCryptoService => returneaza un Base64
-        //Base64 e folosit pt formatarea datelor - la ce e util?
-        //pas 1: dechis fisierul binar (poza/pdf, etc) cu un Notepad
+        //Base64 e folosit pt formatarea datelor 
+        //pas 1: dechid fisierul binar (poza/pdf, etc) cu un Notepad
         //pas 2: dau copy paste la ce apare in Notepad pe site-ul base64encode.org +click pe Encode=> aplic o transformare intr-un Base64 => rezulta un fisier text
 
         //key este cheia de criptare
@@ -417,7 +417,7 @@ namespace Dasha_Automation.Utilities
 
 
 
-//metoda de DECRIPTARE primeste un fisier Base64 si il 
+//metoda de DECRIPTARE primeste un fisier Base64 
         public static string Decrypt(string encrypt, string key)
         {
             using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider())

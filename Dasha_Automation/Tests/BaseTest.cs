@@ -169,10 +169,18 @@ namespace Dasha_Automation.Tests
       //!!! am folosit encapsulation pt a citi valorile lui expectedItemCategory din TestData (=> am evitat IF-urile pt fiecare expectedItemCategory)
             FilterFunctionality filter = new FilterFunctionality(_driver,expectedItemCategory);
             filter.GoToItemMainCategory();
-            Assert.AreEqual(expectedCategoryName, filter.CheckMainMenuCategories());
+            if(expectedCategoryName != "OUTLET")
+            {
+                Assert.AreEqual(expectedCategoryName, filter.CheckMainMenuCategories());
+            }
+            else
+            {
+                Assert.AreEqual(expectedCategoryName, filter.CheckOutletPage());
+            }
+            
 
 
-       //in pagina de search "Cosemtice"/"Genti din piele naturala"/etc: dau click pe pagina produsului cu expectedCodProdus din TestData
+       //in pagina de search "Cosemtice"/"Genti din piele naturala"/NOUTATI/OUTLET/etc: dau click pe pagina produsului cu expectedCodProdus din TestData
        // !!! am folosit encapsulation cu metoda de Getter pt a citi valorile lui expectedCodProdus din TestData
             ItemPage selectedItem = new ItemPage(_driver, expectedCodProdus);
             selectedItem.GoToItemPageGeneral();

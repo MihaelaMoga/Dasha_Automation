@@ -63,8 +63,8 @@ namespace Dasha_Automation.Utilities
                         }
 
 
-                        //comentez codul de mai jos pt ca nu vrem sa ne conectam prin proxy
-                        //la rularea unui test scris AuthenticationTest.cs, cu linia de cod de mai jos se va instala automat extensia selectata
+                        //comentez codul de mai jos pt ca nu vrem sa instalam extensia selectata
+                        //la rularea unui test, cu linia de cod de mai jos se va instala automat extensia selectata
                         // options.AddExtension("C:\\Users\\Miha\\Downloads\\extension_4_42_0_0.crx");
 
                         //instantiez driverul cu options definite mai sus

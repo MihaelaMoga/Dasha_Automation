@@ -17,7 +17,7 @@ namespace Dasha_Automation.Tests.ModificaParolaTests
         string url = Utilities.FrameworkConstants.GetUrl();
 
 
-        //Nota: metoda de CITIRE a datelor de teste este GetCredentialsDataCsv3 si se afla in clasa parinte BaseTest.cs
+  //Nota: metoda de CITIRE a datelor de teste este GetCredentialsDataCsv3 si se afla in clasa parinte BaseTest.cs
        
 
         //   [TestCase("testarescoalainfo@gmail.com","papadie456","")]
